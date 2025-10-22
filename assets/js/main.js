@@ -1,4 +1,4 @@
-import { initAuth, login, getCurrentUser, logout as doLogout, ensureProfile, getProfile, appendHistory } from './auth.js';
+import { initAuth, login, getCurrentUser, logout as doLogout, ensureProfile, appendHistory, registerUser } from './auth.js';
 import { populateProfile, renderHistory } from './profile.js';
 import { generateConvictions, refreshConvictions, renderConvictions, handleAppealSubmission } from './convictions.js';
 import { initPayments, updateWalletUI, setPaymentLocale } from './payments.js';
@@ -11,9 +11,28 @@ const translations = {
     clearData: 'Notīrīt datus',
     loginTitle: 'Drošā piekļuve',
     loginSubtitle: 'Pieslēdzies, lai redzētu visu, ko tu patiesībā neesi darījis.',
+    registerSubtitle: 'Izveido savu neoficiālo profilu, lai saņemtu neoficiālu uzmanību.',
     username: 'Lietotājvārds',
     password: 'Parole',
     login: 'Pieslēgties',
+    register: 'Reģistrēties',
+    registerName: 'Vārds, Uzvārds',
+    registerUsername: 'Lietotājvārds',
+    registerPassword: 'Parole',
+    registerConfirm: 'Apstipriniet paroli',
+    tabLogin: 'Pieslēgties',
+    tabRegister: 'Reģistrācija',
+    registerHint: 'Reģistrējoties jūs piekrītat, ka šī ir parodija.',
+    registerInvalid: 'Lūdzu aizpildiet lietotājvārdu un paroli.',
+    registerMismatch: 'Paroles nesakrīt.',
+    registerExists: 'Šāds lietotājvārds jau pastāv.',
+    registerWeak: 'Parolei jābūt vismaz 4 rakstzīmes.',
+    registerSuccess: 'Profils izveidots. Laipni lūdzam!',
+    registerSuccessToast: 'Reģistrācija izdevusies. Virtuālie dati ir gatavi.',
+    registerNamePlaceholder: 'Piem., Līga Fantāzija',
+    registerUsernamePlaceholder: 'piem. liga.fantazija',
+    registerPasswordPlaceholder: 'Izvēlieties paroli',
+    registerConfirmPlaceholder: 'Atkārtojiet paroli',
     logout: 'Izlogoties',
     menuConvictions: 'Ieraksti',
     menuServices: 'Pakalpojumi',
@@ -64,9 +83,28 @@ const translations = {
     clearData: 'Clear data',
     loginTitle: 'Secure access',
     loginSubtitle: 'Sign in to see everything you definitely did not do.',
+    registerSubtitle: 'Create your unofficial profile to receive unofficial attention.',
     username: 'Username',
     password: 'Password',
     login: 'Sign in',
+    register: 'Register',
+    registerName: 'Full name',
+    registerUsername: 'Username',
+    registerPassword: 'Password',
+    registerConfirm: 'Confirm password',
+    tabLogin: 'Sign in',
+    tabRegister: 'Register',
+    registerHint: 'By registering you agree this is a parody.',
+    registerInvalid: 'Please provide a username and password.',
+    registerMismatch: 'Passwords do not match.',
+    registerExists: 'That username already exists.',
+    registerWeak: 'Password must be at least 4 characters.',
+    registerSuccess: 'Profile created. Welcome!',
+    registerSuccessToast: 'Registration complete. Imaginary data is ready.',
+    registerNamePlaceholder: 'e.g., Liga Fantasy',
+    registerUsernamePlaceholder: 'e.g., liga.fantasy',
+    registerPasswordPlaceholder: 'Choose a password',
+    registerConfirmPlaceholder: 'Repeat the password',
     logout: 'Log out',
     menuConvictions: 'Records',
     menuServices: 'Services',
@@ -124,6 +162,10 @@ const dashboard = document.getElementById('dashboard');
 const loginForm = document.getElementById('login-form');
 const loginMessage = document.getElementById('login-message');
 const logoutButton = document.getElementById('logout');
+const registerForm = document.getElementById('register-form');
+const registerMessage = document.getElementById('register-message');
+const authTabs = document.querySelectorAll('[data-auth-tab]');
+const authPanels = document.querySelectorAll('.auth-panel');
 const langButtons = document.querySelectorAll('.lang-toggle');
 const clearButton = document.getElementById('clear-data');
 const menuItems = document.querySelectorAll('.menu-item');
@@ -214,10 +256,19 @@ downloadBtn.addEventListener('click', () => {
 });
 
 function setupLogin() {
+  switchAuthPanel('login');
+
   const stored = getCurrentUser();
   if (stored) {
     completeLogin(stored);
   }
+
+  authTabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+      if (tab.classList.contains('active')) return;
+      switchAuthPanel(tab.dataset.authTab);
+    });
+  });
 
   loginForm.addEventListener('submit', event => {
     event.preventDefault();
@@ -235,12 +286,62 @@ function setupLogin() {
     }
   });
 
+  if (registerForm) {
+    registerForm.addEventListener('submit', event => {
+      event.preventDefault();
+      registerMessage.textContent = '';
+      const name = registerForm.fullname.value.trim();
+      const username = registerForm.newusername.value.trim();
+      const password = registerForm.newpassword.value.trim();
+      const confirm = registerForm.confirmpassword.value.trim();
+
+      if (!username || !password) {
+        registerMessage.textContent = translations[activeLanguage].registerInvalid;
+        registerMessage.style.color = 'var(--color-danger)';
+        return;
+      }
+
+      if (password !== confirm) {
+        registerMessage.textContent = translations[activeLanguage].registerMismatch;
+        registerMessage.style.color = 'var(--color-danger)';
+        return;
+      }
+
+      const result = registerUser({ user: username, pass: password, name });
+      if (!result.success) {
+        const messageKey = {
+          exists: 'registerExists',
+          weak: 'registerWeak',
+          invalid: 'registerInvalid'
+        }[result.reason] || 'registerInvalid';
+        registerMessage.textContent = translations[activeLanguage][messageKey];
+        registerMessage.style.color = 'var(--color-danger)';
+        return;
+      }
+
+      ensureProfile(result.user.user);
+      registerForm.reset();
+      registerMessage.textContent = translations[activeLanguage].registerSuccess;
+      registerMessage.style.color = 'var(--color-success)';
+      const loggedIn = login(username, password);
+      switchAuthPanel('login');
+      showToast(translations[activeLanguage].registerSuccessToast);
+      completeLogin(loggedIn || result.user);
+    });
+  }
+
   logoutButton.addEventListener('click', () => {
     doLogout();
     activeUser = null;
     loginSection.classList.remove('hidden');
     dashboard.classList.add('hidden');
     loginMessage.textContent = '';
+    registerMessage.textContent = '';
+    if (registerForm) {
+      registerForm.reset();
+    }
+    loginForm.reset();
+    switchAuthPanel('login');
   });
 }
 
@@ -302,6 +403,12 @@ function updateLanguageTexts() {
     const key = el.dataset.i18n;
     if (t[key]) {
       el.textContent = t[key];
+    }
+  });
+  document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+    const key = el.dataset.i18nPlaceholder;
+    if (t[key]) {
+      el.setAttribute('placeholder', t[key]);
     }
   });
   chatInput.placeholder = activeLanguage === 'en' ? 'Type your question' : 'Raksti savu jautājumu';
@@ -397,4 +504,24 @@ function showToast(message) {
     notification.classList.remove('show');
     setTimeout(() => notification.classList.add('hidden'), 300);
   }, 2400);
+}
+
+function switchAuthPanel(target) {
+  authTabs.forEach(tab => {
+    tab.classList.toggle('active', tab.dataset.authTab === target);
+  });
+  authPanels.forEach(panel => {
+    panel.classList.toggle('hidden', panel.dataset.auth !== target);
+  });
+  if (target === 'login') {
+    registerMessage.textContent = '';
+    if (loginForm) {
+      loginForm.username.focus();
+    }
+  } else {
+    loginMessage.textContent = '';
+    if (registerForm) {
+      registerForm.newusername.focus();
+    }
+  }
 }

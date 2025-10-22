@@ -11,7 +11,7 @@ const DEFAULT_USERS = [
 export function initAuth() {
   const stored = localStorage.getItem(USERS_KEY);
   if (!stored) {
-    localStorage.setItem(USERS_KEY, JSON.stringify(DEFAULT_USERS));
+    saveUsers(DEFAULT_USERS);
   }
 }
 
@@ -22,9 +22,10 @@ export function getUsers() {
 
 export function login(username, password) {
   const users = getUsers();
-  const user = users.find(u => u.user === username && u.pass === password);
+  const normalized = username.trim().toLowerCase();
+  const user = users.find(u => u.user === normalized && u.pass === password);
   if (user) {
-    localStorage.setItem(CURRENT_USER_KEY, username);
+    localStorage.setItem(CURRENT_USER_KEY, normalized);
     return user;
   }
   return null;
@@ -100,6 +101,42 @@ export function appendAppeal(username, appeal) {
   localStorage.setItem(profileKeyFor(username), JSON.stringify(profile));
 }
 
+export function registerUser({ user, pass, name }) {
+  const username = user.trim().toLowerCase();
+  const password = pass.trim();
+  const displayName = name.trim();
+
+  if (!username || !password) {
+    return { success: false, reason: 'invalid' };
+  }
+
+  if (password.length < 4) {
+    return { success: false, reason: 'weak' };
+  }
+
+  const users = getUsers();
+  if (users.some(existing => existing.user === username)) {
+    return { success: false, reason: 'exists' };
+  }
+
+  const generatedName = displayName || username.split('.').map(part => part.charAt(0).toUpperCase() + part.slice(1)).join(' ');
+  const avatar = generatedName
+    .split(' ')
+    .filter(Boolean)
+    .map(word => word.charAt(0).toUpperCase())
+    .slice(0, 2)
+    .join('') || username.slice(0, 2).toUpperCase();
+
+  const newUser = { user: username, pass: password, name: generatedName, avatar };
+  users.push(newUser);
+  saveUsers(users);
+  return { success: true, user: newUser };
+}
+
 function profileKeyFor(username) {
   return `lep_profile_${username}`;
+}
+
+function saveUsers(users) {
+  localStorage.setItem(USERS_KEY, JSON.stringify(users));
 }

@@ -19,16 +19,38 @@
     <main class="app-main">
       <section id="login-section" class="panel login-panel">
         <h1 data-i18n="loginTitle">Drošā piekļuve</h1>
-        <p class="login-subtext" data-i18n="loginSubtitle">Pieslēdzies, lai redzētu visu, ko tu patiesībā neesi darījis.</p>
-        <form id="login-form" class="form">
-          <label class="form-label" for="username" data-i18n="username">Lietotājvārds</label>
-          <input type="text" id="username" name="username" required>
-          <label class="form-label" for="password" data-i18n="password">Parole</label>
-          <input type="password" id="password" name="password" required>
-          <button type="submit" class="primary-button" data-i18n="login">Pieslēgties</button>
-          <p class="login-hint">janis.berzins / 1234<br>evita.liepina / 1234</p>
-        </form>
-        <div id="login-message" class="login-message" role="alert" aria-live="polite"></div>
+        <div class="auth-tabs">
+          <button type="button" class="auth-tab active" data-auth-tab="login" data-i18n="tabLogin">Pieslēgties</button>
+          <button type="button" class="auth-tab" data-auth-tab="register" data-i18n="tabRegister">Reģistrācija</button>
+        </div>
+        <div class="auth-panel" data-auth="login">
+          <p class="login-subtext" data-i18n="loginSubtitle">Pieslēdzies, lai redzētu visu, ko tu patiesībā neesi darījis.</p>
+          <form id="login-form" class="form">
+            <label class="form-label" for="username" data-i18n="username">Lietotājvārds</label>
+            <input type="text" id="username" name="username" required>
+            <label class="form-label" for="password" data-i18n="password">Parole</label>
+            <input type="password" id="password" name="password" required>
+            <button type="submit" class="primary-button" data-i18n="login">Pieslēgties</button>
+            <p class="login-hint">janis.berzins / 1234<br>evita.liepina / 1234</p>
+          </form>
+          <div id="login-message" class="login-message" role="alert" aria-live="polite"></div>
+        </div>
+        <div class="auth-panel hidden" data-auth="register">
+          <p class="login-subtext" data-i18n="registerSubtitle">Izveido savu neoficiālo profilu, lai saņemtu neoficiālu uzmanību.</p>
+          <form id="register-form" class="form">
+            <label class="form-label" for="register-name" data-i18n="registerName">Vārds, Uzvārds</label>
+            <input type="text" id="register-name" name="fullname" data-i18n-placeholder="registerNamePlaceholder">
+            <label class="form-label" for="register-username" data-i18n="registerUsername">Lietotājvārds</label>
+            <input type="text" id="register-username" name="newusername" required data-i18n-placeholder="registerUsernamePlaceholder">
+            <label class="form-label" for="register-password" data-i18n="registerPassword">Parole</label>
+            <input type="password" id="register-password" name="newpassword" required data-i18n-placeholder="registerPasswordPlaceholder">
+            <label class="form-label" for="register-confirm" data-i18n="registerConfirm">Apstipriniet paroli</label>
+            <input type="password" id="register-confirm" name="confirmpassword" required data-i18n-placeholder="registerConfirmPlaceholder">
+            <button type="submit" class="primary-button" data-i18n="register">Reģistrēties</button>
+            <p class="login-hint" data-i18n="registerHint">Reģistrējoties jūs piekrītat, ka šī ir parodija.</p>
+          </form>
+          <div id="register-message" class="login-message" role="alert" aria-live="polite"></div>
+        </div>
       </section>
 
       <section id="dashboard" class="dashboard hidden">
