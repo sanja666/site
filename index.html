@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="lv">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Latvijas E-pakalpojumi — oficiālā neoficiālā versija</title>
+  <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+  <div id="app" class="app-shell">
+    <header class="app-header">
+      <div class="logo" id="logo" title="Latvijas E-pakalpojumi">Latvijas E-pakalpojumi</div>
+      <div class="header-actions">
+        <button class="lang-toggle" data-lang="lv">LV</button>
+        <button class="lang-toggle" data-lang="en">EN</button>
+        <button id="clear-data" class="ghost-button" data-i18n="clearData">Notīrīt datus</button>
+      </div>
+    </header>
+    <main class="app-main">
+      <section id="login-section" class="panel login-panel">
+        <h1 data-i18n="loginTitle">Drošā piekļuve</h1>
+        <div class="auth-tabs">
+          <button type="button" class="auth-tab active" data-auth-tab="login" data-i18n="tabLogin">Pieslēgties</button>
+          <button type="button" class="auth-tab" data-auth-tab="register" data-i18n="tabRegister">Reģistrācija</button>
+        </div>
+        <div class="auth-panel" data-auth="login">
+          <p class="login-subtext" data-i18n="loginSubtitle">Pieslēdzies, lai redzētu visu, ko tu patiesībā neesi darījis.</p>
+          <form id="login-form" class="form">
+            <label class="form-label" for="username" data-i18n="username">Lietotājvārds</label>
+            <input type="text" id="username" name="username" required>
+            <label class="form-label" for="password" data-i18n="password">Parole</label>
+            <input type="password" id="password" name="password" required>
+            <button type="submit" class="primary-button" data-i18n="login">Pieslēgties</button>
+            <p class="login-hint">janis.berzins / 1234<br>evita.liepina / 1234</p>
+          </form>
+          <div id="login-message" class="login-message" role="alert" aria-live="polite"></div>
+        </div>
+        <div class="auth-panel hidden" data-auth="register">
+          <p class="login-subtext" data-i18n="registerSubtitle">Izveido savu neoficiālo profilu, lai saņemtu neoficiālu uzmanību.</p>
+          <form id="register-form" class="form">
+            <label class="form-label" for="register-name" data-i18n="registerName">Vārds, Uzvārds</label>
+            <input type="text" id="register-name" name="fullname" data-i18n-placeholder="registerNamePlaceholder">
+            <label class="form-label" for="register-username" data-i18n="registerUsername">Lietotājvārds</label>
+            <input type="text" id="register-username" name="newusername" required data-i18n-placeholder="registerUsernamePlaceholder">
+            <label class="form-label" for="register-password" data-i18n="registerPassword">Parole</label>
+            <input type="password" id="register-password" name="newpassword" required data-i18n-placeholder="registerPasswordPlaceholder">
+            <label class="form-label" for="register-confirm" data-i18n="registerConfirm">Apstipriniet paroli</label>
+            <input type="password" id="register-confirm" name="confirmpassword" required data-i18n-placeholder="registerConfirmPlaceholder">
+            <button type="submit" class="primary-button" data-i18n="register">Reģistrēties</button>
+            <p class="login-hint" data-i18n="registerHint">Reģistrējoties jūs piekrītat, ka šī ir parodija.</p>
+          </form>
+          <div id="register-message" class="login-message" role="alert" aria-live="polite"></div>
+        </div>
+      </section>
+
+      <section id="dashboard" class="dashboard hidden">
+        <nav class="sidebar">
+          <div class="user-card" id="user-card">
+            <div class="avatar" id="user-avatar">JB</div>
+            <div>
+              <div class="user-name" id="user-name">Janis Bērziņš</div>
+              <div class="user-balance" id="user-balance">€0.00</div>
+            </div>
+            <button id="logout" class="ghost-button" data-i18n="logout">Izlogoties</button>
+          </div>
+          <ul class="menu">
+            <li data-target="convictions" class="menu-item active" data-i18n="menuConvictions">Ieraksti</li>
+            <li data-target="services" class="menu-item" data-i18n="menuServices">Pakalpojumi</li>
+            <li data-target="payments" class="menu-item" data-i18n="menuPayments">Maksājumi</li>
+            <li data-target="history" class="menu-item" data-i18n="menuHistory">Vēsture</li>
+            <li data-target="support" class="menu-item" data-i18n="menuSupport">Atbalsts</li>
+          </ul>
+        </nav>
+        <div class="content">
+          <section id="convictions" class="content-section">
+            <header class="section-header">
+              <div>
+                <h2 data-i18n="convictionsTitle">Ieraksti par tevi</h2>
+                <p class="disclaimer" data-i18n="convictionsDisclaimer">Izdomāti ieraksti, humora dēļ.</p>
+              </div>
+              <div class="section-actions">
+                <button id="refresh-convictions" class="ghost-button" data-i18n="refreshConvictions">Atjaunot ierakstus</button>
+                <button id="download-convictions" class="primary-button" data-i18n="downloadPdf">Lejupielādēt PDF ar ierakstiem</button>
+              </div>
+            </header>
+            <div id="conviction-list" class="conviction-grid"></div>
+          </section>
+
+          <section id="services" class="content-section hidden">
+            <h2 data-i18n="servicesTitle">Pakalpojumi</h2>
+            <div class="service-list" id="service-list"></div>
+          </section>
+
+          <section id="payments" class="content-section hidden">
+            <h2 data-i18n="paymentsTitle">Maksājumi</h2>
+            <div class="wallet-panel">
+              <div>
+                <p data-i18n="walletBalance">Jūsu virtuālais maciņš:</p>
+                <div class="wallet-amount" id="wallet-amount">€0.00</div>
+              </div>
+              <div class="top-up-buttons">
+                <button data-amount="5" class="primary-button">+5€</button>
+                <button data-amount="10" class="primary-button">+10€</button>
+                <button data-amount="20" class="primary-button">+20€</button>
+              </div>
+            </div>
+            <div class="payments-history">
+              <h3 data-i18n="mockTaxes">Iedomātie nodokļi</h3>
+              <ul id="payments-list" class="timeline"></ul>
+            </div>
+          </section>
+
+          <section id="history" class="content-section hidden">
+            <h2 data-i18n="historyTitle">Vēsture</h2>
+            <ul id="history-list" class="timeline"></ul>
+          </section>
+
+          <section id="support" class="content-section hidden">
+            <h2 data-i18n="supportTitle">Atbalsta centrs</h2>
+            <div class="chatbot">
+              <div id="chat-log" class="chat-log"></div>
+              <form id="chat-form" class="chat-form">
+                <input type="text" id="chat-input" placeholder="Raksti savu jautājumu" required>
+                <button type="submit" class="primary-button" data-i18n="send">Sūtīt</button>
+              </form>
+            </div>
+          </section>
+        </div>
+      </section>
+    </main>
+
+    <div id="modal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+      <div class="modal-content">
+        <button class="modal-close" id="modal-close" aria-label="Close">×</button>
+        <h3 id="modal-title" data-i18n="appealTitle">Apstrīdēt sodījumu</h3>
+        <form id="appeal-form" class="form">
+          <input type="hidden" id="appeal-id">
+          <label class="form-label" for="appeal-reason" data-i18n="appealReason">Pamatojums</label>
+          <textarea id="appeal-reason" required></textarea>
+          <label class="form-label" for="appeal-details" data-i18n="appealDetails">Detalizēts apraksts</label>
+          <textarea id="appeal-details" required></textarea>
+          <button type="submit" class="primary-button" data-i18n="submitAppeal">Iesniegt</button>
+        </form>
+      </div>
+    </div>
+
+    <div id="notification" class="notification hidden"></div>
+  </div>
+  <script type="module" src="assets/js/main.js"></script>
+</body>
+</html>
