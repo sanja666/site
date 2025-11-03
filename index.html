@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>NebulaChat Studio</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="assets/css/style.css" />
+  </head>
+  <body>
+    <div class="app" data-theme="dark">
+      <header class="topbar">
+        <div class="topbar__brand">
+          <div class="brand-mark">NC</div>
+          <div>
+            <h1>NebulaChat Studio</h1>
+            <p>Human-guided conversational workspace</p>
+          </div>
+        </div>
+        <div class="topbar__actions">
+          <div class="activity" id="activity-indicator">
+            <span class="pulse"></span>
+            <span>Workspace synced moments ago</span>
+          </div>
+          <button class="ghost" id="toggle-theme" aria-pressed="true">
+            <span class="icon">🌙</span>
+            <span>Dark mode</span>
+          </button>
+          <button class="ghost" id="toggle-compact">
+            <span class="icon">⇅</span>
+            <span>Density</span>
+          </button>
+          <button class="primary" id="open-settings">
+            <span class="icon">⚙️</span>
+            <span>Studio settings</span>
+          </button>
+        </div>
+      </header>
+
+      <main class="workspace">
+        <aside class="sidebar">
+          <div class="sidebar__section">
+            <div class="section-header">
+              <h2>Sessions</h2>
+              <button class="ghost" id="new-session">
+                <span class="icon">＋</span>
+                <span>New chat</span>
+              </button>
+            </div>
+            <div class="search">
+              <span class="icon">🔍</span>
+              <input type="search" id="session-search" placeholder="Search conversations" />
+            </div>
+            <div class="conversation-list" id="conversation-list"></div>
+          </div>
+
+          <div class="sidebar__section">
+            <div class="section-header">
+              <h3>Playbooks</h3>
+              <button class="ghost" id="open-playbooks">View all</button>
+            </div>
+            <div class="playbook-grid" id="playbook-grid"></div>
+          </div>
+        </aside>
+
+        <section class="chat" aria-live="polite">
+          <div class="chat__header">
+            <div>
+              <div class="chat__subtitle">Active assistant</div>
+              <h2 id="chat-title">Nebula Navigator</h2>
+            </div>
+            <div class="chat__meta">
+              <button class="ghost" id="pin-session" aria-pressed="false">📌 Pin</button>
+              <button class="ghost" id="export-session">⬇️ Export</button>
+              <button class="ghost" id="clear-session">🧹 Reset</button>
+            </div>
+          </div>
+          <div class="chat__timeline" id="session-timeline"></div>
+          <div class="chat__messages" id="message-stream"></div>
+          <div class="chat__suggestions" id="prompt-suggestions"></div>
+          <form class="composer" id="composer" autocomplete="off">
+            <label for="message-input" class="visually-hidden">Message Nebula Navigator</label>
+            <textarea
+              id="message-input"
+              placeholder="Guide the Navigator..."
+              rows="1"
+              required
+            ></textarea>
+            <div class="composer__actions">
+              <div class="composer__addons">
+                <button type="button" class="ghost" id="attach-note" title="Attach reference">📎</button>
+                <button type="button" class="ghost" id="insert-snippet" title="Insert snippet">📄</button>
+                <button type="button" class="ghost" id="insert-emoji" title="Emoji palette">😊</button>
+              </div>
+              <button type="submit" class="primary" id="send-message">
+                <span>Send</span>
+                <span class="icon">⮞</span>
+              </button>
+            </div>
+          </form>
+        </section>
+
+        <aside class="details">
+          <section class="panel" id="assistant-profile">
+            <div class="panel__header">
+              <h3>Nebula Navigator</h3>
+              <span class="status status--online">online</span>
+            </div>
+            <p>
+              Your conversational copilot for research curation and knowledge organization. Navigator
+              draws on curated playbooks and guided workflows—not generative AI—to respond with
+              verified, human-authored insights.
+            </p>
+            <ul class="traits" id="assistant-traits"></ul>
+            <div class="capabilities">
+              <h4>Focus modes</h4>
+              <div class="tag-grid" id="focus-modes"></div>
+            </div>
+          </section>
+
+          <section class="panel" id="session-overview">
+            <div class="panel__header">
+              <h3>Session overview</h3>
+              <button class="ghost" id="refresh-overview">↻ Refresh</button>
+            </div>
+            <dl class="metrics" id="session-metrics"></dl>
+            <div class="timeline" id="session-events"></div>
+          </section>
+
+          <section class="panel" id="knowledge-panel">
+            <div class="panel__header">
+              <h3>Knowledge vault</h3>
+              <button class="ghost" id="open-knowledge">Browse</button>
+            </div>
+            <div class="knowledge-list" id="knowledge-list"></div>
+          </section>
+        </aside>
+      </main>
+
+      <footer class="footer">
+        <div>
+          <strong>NebulaChat Studio</strong> — human-authored assistants for complex workflows
+        </div>
+        <div class="footer__meta">
+          <span>Workspace build 2.7.18</span>
+          <span>•</span>
+          <span>Last synced <time id="footer-sync">just now</time></span>
+          <button class="ghost" id="open-changelog">Changelog</button>
+        </div>
+      </footer>
+    </div>
+
+    <dialog id="settings-dialog" aria-label="Workspace settings">
+      <form method="dialog" class="settings">
+        <header class="settings__header">
+          <h2>Studio settings</h2>
+          <button class="ghost" value="cancel">Close</button>
+        </header>
+        <div class="settings__group">
+          <h3>Theme</h3>
+          <label class="toggle">
+            <input type="checkbox" id="settings-dark" checked />
+            <span class="slider"></span>
+            <span class="toggle__label">Enable dark theme</span>
+          </label>
+          <label class="toggle">
+            <input type="checkbox" id="settings-compact" />
+            <span class="slider"></span>
+            <span class="toggle__label">Compact density</span>
+          </label>
+        </div>
+        <div class="settings__group">
+          <h3>Notifications</h3>
+          <label class="toggle">
+            <input type="checkbox" id="notify-highlights" checked />
+            <span class="slider"></span>
+            <span class="toggle__label">Digest when Navigator summarizes a topic</span>
+          </label>
+          <label class="toggle">
+            <input type="checkbox" id="notify-reminders" />
+            <span class="slider"></span>
+            <span class="toggle__label">Remind me about dormant threads</span>
+          </label>
+        </div>
+        <div class="settings__group">
+          <h3>Exports</h3>
+          <p class="settings__description">
+            Choose how NebulaChat prepares conversation exports for your records.
+          </p>
+          <label class="radio">
+            <input type="radio" name="export" value="markdown" checked />
+            <span>Concise Markdown brief</span>
+          </label>
+          <label class="radio">
+            <input type="radio" name="export" value="timeline" />
+            <span>Chronological timeline</span>
+          </label>
+          <label class="radio">
+            <input type="radio" name="export" value="transcript" />
+            <span>Full transcript with annotations</span>
+          </label>
+        </div>
+        <footer class="settings__footer">
+          <button class="ghost" value="cancel">Cancel</button>
+          <button class="primary" value="default">Save changes</button>
+        </footer>
+      </form>
+    </dialog>
+
+    <dialog id="playbooks-dialog" aria-label="Playbook library">
+      <form method="dialog" class="dialog">
+        <header class="dialog__header">
+          <h2>Playbook library</h2>
+          <button class="ghost" value="cancel">Close</button>
+        </header>
+        <div class="dialog__content" id="playbook-library"></div>
+        <footer class="dialog__footer">
+          <button class="primary" value="default">Done</button>
+        </footer>
+      </form>
+    </dialog>
+
+    <dialog id="knowledge-dialog" aria-label="Knowledge vault">
+      <form method="dialog" class="dialog">
+        <header class="dialog__header">
+          <h2>Knowledge vault</h2>
+          <button class="ghost" value="cancel">Close</button>
+        </header>
+        <div class="dialog__content" id="knowledge-library"></div>
+        <footer class="dialog__footer">
+          <button class="primary" value="default">Done</button>
+        </footer>
+      </form>
+    </dialog>
+
+    <dialog id="changelog-dialog" aria-label="Changelog">
+      <form method="dialog" class="dialog">
+        <header class="dialog__header">
+          <h2>Workspace changelog</h2>
+          <button class="ghost" value="cancel">Close</button>
+        </header>
+        <div class="dialog__content" id="changelog-content"></div>
+        <footer class="dialog__footer">
+          <button class="primary" value="default">Done</button>
+        </footer>
+      </form>
+    </dialog>
+
+    <script src="assets/js/app.js" type="module"></script>
+  </body>
+</html>
