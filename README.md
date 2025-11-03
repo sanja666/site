@@ -1,19 +1,34 @@
-# NovaClass Teacher HQ
+# NebulaChat Studio
 
-NovaClass is a concept redesign of the Latvian e-klase teacher workspace. It delivers a modern, responsive interface with pre-populated demo data so you can explore class analytics, gradebooks, student profiles, assignments, and communication logs without any manual setup.
+NebulaChat Studio is a fully client-side prototype that reimagines a human-guided conversational
+workspace similar to modern chat copilots. Instead of AI-generated answers, the "Nebula Navigator"
+assistant responds with curated, human-authored insights, guided workflows, and actionable
+playbooks.
 
 ## Features
 
-- **Teaching radar dashboard** with real-time metrics, upcoming assessments, and daily agenda.
-- **Interactive gradebook** for Mathematics, Science, History, and Latvian with inline mark editing, automatic averages, and quick export.
-- **Student and family profiles** including attendance, strengths, support plans, and quick actions.
-- **Assignment planning** complete with due dates, descriptions, status management, and local persistence.
-- **Communication log** to document family touch points and capture new updates.
-- **Insights hub** highlighting subject mastery, attendance spotlight, and celebration notes.
-- **Resettable demo data** stored in localStorage for safe experimentation.
+- **Immersive shell:** desktop-inspired layout with session sidebar, conversational canvas, and
+  intelligence panels for metrics, knowledge, and assistant context.
+- **Session management:** create, pin, search, and reset conversations, with persistent state stored
+  locally in the browser.
+- **Conversational flow:** rich message bubbles, quick prompt dock, and composer actions for
+  attachments, snippets, and reactions.
+- **Workspace intelligence:** session metrics, event timeline, focus modes, and knowledge vault with
+  curated datasets.
+- **Modals & utilities:** responsive dialogs for settings, playbooks, knowledge browsing, and
+  changelog history plus export, theme, and density controls.
+- **Responsive design:** adaptive layout for wide screens down to mobile breakpoints with compact
+  density mode.
 
 ## Getting started
 
-Open `index.html` in your browser. All state is stored locally, so refreshing the page will preserve your changes until you hit the **Reset Demo Data** button in the sidebar.
+1. Serve the project locally, for example:
 
-Because the application is static, you can deploy it on any static hosting provider (GitHub Pages, Netlify, etc.) without additional configuration.
+   ```bash
+   npx serve
+   ```
+
+2. Visit the URL in your browser (typically `http://localhost:3000`).
+
+The workspace stores preferences and sample conversations in `localStorage`. Use your browser's
+storage tools or the "Reset" button inside a session to clear data.

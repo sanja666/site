@@ -1,856 +1,907 @@
-const storageKey = 'nova-classroom-data-v1';
-
-const defaultData = {
-  students: [
-    {
-      id: 'stu-1',
-      name: 'Anna Bērziņa',
-      gradeLevel: '7A',
-      focusAreas: ['STEM lead', 'Debate club'],
-      tags: ['Celebrate'],
-      parents: {
-        guardian: 'Līga Bērziņa',
-        contact: '+371 2244 5544',
-        email: 'liga.berzina@example.com',
-      },
-      attendance: { present: 96, late: 2, absent: 2 },
-      behaviour: 'Model learner with a passion for problem solving.',
-      supportPlan: 'Offer advanced math challenges twice a week.',
-      wellbeing: 'Reports high motivation; enjoys collaborative work.',
-      marks: {
-        Mathematics: [10, 9, 10, 9],
-        Latvian: [9, 8, 10],
-        Science: [10, 10, 9],
-        History: [8, 9, 9],
-      },
-      upcomingAssessments: [
-        { title: 'Geometry project showcase', dueDate: '2024-04-19' },
-        { title: 'Science fair prototype', dueDate: '2024-04-26' },
-      ],
-      notes: [
-        'Family would appreciate weekly update email.',
-        'Prepare recommendation for robotics camp.',
-      ],
-    },
-    {
-      id: 'stu-2',
-      name: 'Rihards Ozols',
-      gradeLevel: '7A',
-      focusAreas: ['Creative writing', 'Football team captain'],
-      tags: ['Celebrate'],
-      parents: {
-        guardian: 'Māris Ozols',
-        contact: '+371 2299 0011',
-        email: 'maris.ozols@example.com',
-      },
-      attendance: { present: 92, late: 5, absent: 3 },
-      behaviour: 'Energetic and collaborative, benefits from clear routines.',
-      supportPlan: 'Provide visual planning templates for long-form writing.',
-      wellbeing: 'Needs reminders to balance sports and rest.',
-      marks: {
-        Mathematics: [7, 8, 8, 9],
-        Latvian: [9, 9, 10],
-        Science: [8, 8, 9],
-        History: [8, 7, 9],
-      },
-      upcomingAssessments: [
-        { title: 'Narrative essay draft', dueDate: '2024-04-22' },
-      ],
-      notes: ['Invite to writing mentorship programme.'],
-    },
-    {
-      id: 'stu-3',
-      name: 'Lāsma Liepa',
-      gradeLevel: '7A',
-      focusAreas: ['STEM club', 'Choir'],
-      tags: ['Support'],
-      parents: {
-        guardian: 'Agnese Liepa',
-        contact: '+371 2667 4421',
-        email: 'agnese.liepa@example.com',
-      },
-      attendance: { present: 88, late: 4, absent: 8 },
-      behaviour: 'Quiet thinker. Benefits from check-ins and confidence boosts.',
-      supportPlan: 'Schedule peer tutoring twice a week; chunk tasks.',
-      wellbeing: 'Worries before assessments; enjoys art therapy sessions.',
-      marks: {
-        Mathematics: [6, 7, 7, 8],
-        Latvian: [7, 8, 7],
-        Science: [8, 7, 9],
-        History: [7, 7, 8],
-      },
-      upcomingAssessments: [
-        { title: 'Algebra mastery check', dueDate: '2024-04-17' },
-        { title: 'Biology lab write-up', dueDate: '2024-04-23' },
-      ],
-      notes: [
-        'Contact mother after biology lab to celebrate progress.',
-        'Offer calming space before tests.',
-      ],
-    },
-    {
-      id: 'stu-4',
-      name: 'Edgars Kalniņš',
-      gradeLevel: '7A',
-      focusAreas: ['Basketball', 'Media club'],
-      tags: ['Support'],
-      parents: {
-        guardian: 'Ieva Kalniņa',
-        contact: '+371 2933 8811',
-        email: 'ieva.kalnina@example.com',
-      },
-      attendance: { present: 84, late: 8, absent: 8 },
-      behaviour: 'Creative ideas; needs scaffolds for organisation.',
-      supportPlan: 'Check planners every Monday and Thursday.',
-      wellbeing: 'Responds well to positive calls home.',
-      marks: {
-        Mathematics: [6, 7, 8],
-        Latvian: [7, 6, 7],
-        Science: [8, 7, 7],
-        History: [9, 8, 8],
-      },
-      upcomingAssessments: [
-        { title: 'History museum reflection', dueDate: '2024-04-21' },
-      ],
-      notes: ['Coordinate with basketball coach around exam week.'],
-    },
-    {
-      id: 'stu-5',
-      name: 'Marta Jansone',
-      gradeLevel: '7A',
-      focusAreas: ['Community service', 'Art portfolio'],
-      tags: ['Celebrate'],
-      parents: {
-        guardian: 'Janis Jansons',
-        contact: '+371 2777 4410',
-        email: 'janis.jansons@example.com',
-      },
-      attendance: { present: 98, late: 1, absent: 1 },
-      behaviour: 'Empathetic leader who coaches peers generously.',
-      supportPlan: 'Encourage leadership in service projects.',
-      wellbeing: 'Thrives when trusted with responsibility.',
-      marks: {
-        Mathematics: [9, 10, 9],
-        Latvian: [10, 10, 9],
-        Science: [9, 9, 10],
-        History: [9, 9, 9],
-      },
-      upcomingAssessments: [
-        { title: 'Civics group presentation', dueDate: '2024-04-18' },
-        { title: 'Art portfolio review', dueDate: '2024-04-25' },
-      ],
-      notes: ['Prepare reference letter for summer leadership institute.'],
-    },
-    {
-      id: 'stu-6',
-      name: 'Toms Siliņš',
-      gradeLevel: '7A',
-      focusAreas: ['Robotics', 'Esports club'],
-      tags: ['Support'],
-      parents: {
-        guardian: 'Aldis Siliņš',
-        contact: '+371 2300 7788',
-        email: 'aldis.silins@example.com',
-      },
-      attendance: { present: 90, late: 6, absent: 4 },
-      behaviour: 'Analytical thinker; needs encouragement to share ideas aloud.',
-      supportPlan: 'Pair with presentation buddy and offer rehearsal time.',
-      wellbeing: 'Responds well to gamified goals.',
-      marks: {
-        Mathematics: [8, 9, 8, 9],
-        Latvian: [7, 8, 7],
-        Science: [9, 9, 10],
-        History: [8, 8, 9],
-      },
-      upcomingAssessments: [
-        { title: 'Robotics sprint demo', dueDate: '2024-04-24' },
-      ],
-      notes: ['Send celebration note home after robotics demo.'],
-    },
-  ],
-  assignments: [
-    {
-      id: 'as-1',
-      title: 'Algebra mastery check',
-      subject: 'Mathematics',
-      dueDate: '2024-04-17',
-      description: 'Short response questions covering algebraic reasoning.',
-      status: 'Active',
-    },
-    {
-      id: 'as-2',
-      title: 'Narrative essay draft',
-      subject: 'Latvian language',
-      dueDate: '2024-04-22',
-      description: 'First draft focused on character development.',
-      status: 'Active',
-    },
-    {
-      id: 'as-3',
-      title: 'Science lab write-up',
-      subject: 'Science',
-      dueDate: '2024-04-23',
-      description: 'Lab reflection analysing the controlled variables.',
-      status: 'Active',
-    },
-  ],
-  communications: [
-    {
-      id: 'com-1',
-      recipient: 'Bērziņa family',
-      channel: 'Email',
-      message: 'Shared Anna’s progress in geometry and upcoming competition dates.',
-      date: '2024-04-10 08:45',
-    },
-    {
-      id: 'com-2',
-      recipient: 'Liepa family',
-      channel: 'Phone call',
-      message: 'Discussed upcoming algebra assessment plan and support session.',
-      date: '2024-04-09 16:20',
-    },
-    {
-      id: 'com-3',
-      recipient: 'Kalniņš family',
-      channel: 'SMS',
-      message: 'Celebrated Edgars’s history project success and shared study plan.',
-      date: '2024-04-07 18:10',
-    },
-  ],
-  agenda: [
-    {
-      time: '08:15',
-      title: 'Morning greeting & advisory circle',
-      details: 'Focus on gratitude and upcoming science fair milestones.',
-    },
-    {
-      time: '09:00',
-      title: '7A Mathematics',
-      details: 'Stations: algebra puzzles, geometry VR, peer tutoring.',
-    },
-    {
-      time: '10:30',
-      title: 'Planning block',
-      details: 'Co-plan cross-curricular civics project with Ms. Ozola.',
-    },
-    {
-      time: '13:00',
-      title: 'Family call window',
-      details: 'Follow-up with Liepa family on support plan.',
-    },
-  ],
+const STORAGE_KEY = 'nebulachat-studio-state';
+const dom = {
+  app: document.querySelector('.app'),
+  conversationList: document.getElementById('conversation-list'),
+  messageStream: document.getElementById('message-stream'),
+  promptSuggestions: document.getElementById('prompt-suggestions'),
+  chatTitle: document.getElementById('chat-title'),
+  chatTimeline: document.getElementById('session-timeline'),
+  timelineEvents: document.getElementById('session-events'),
+  metrics: document.getElementById('session-metrics'),
+  assistantTraits: document.getElementById('assistant-traits'),
+  focusModes: document.getElementById('focus-modes'),
+  knowledgeList: document.getElementById('knowledge-list'),
+  footerSync: document.getElementById('footer-sync'),
+  sessionSearch: document.getElementById('session-search'),
+  playbookGrid: document.getElementById('playbook-grid'),
+  sessionTimeline: document.getElementById('session-timeline'),
+  composer: document.getElementById('composer'),
+  messageInput: document.getElementById('message-input'),
+  pinButton: document.getElementById('pin-session'),
+  exportButton: document.getElementById('export-session'),
+  clearButton: document.getElementById('clear-session'),
+  toggleTheme: document.getElementById('toggle-theme'),
+  toggleCompact: document.getElementById('toggle-compact'),
+  newSession: document.getElementById('new-session'),
+  attachNote: document.getElementById('attach-note'),
+  insertSnippet: document.getElementById('insert-snippet'),
+  insertEmoji: document.getElementById('insert-emoji'),
+  refreshOverview: document.getElementById('refresh-overview'),
+  dialogs: {
+    settings: document.getElementById('settings-dialog'),
+    playbooks: document.getElementById('playbooks-dialog'),
+    knowledge: document.getElementById('knowledge-dialog'),
+    changelog: document.getElementById('changelog-dialog'),
+  },
+  buttons: {
+    openSettings: document.getElementById('open-settings'),
+    openPlaybooks: document.getElementById('open-playbooks'),
+    openKnowledge: document.getElementById('open-knowledge'),
+    openChangelog: document.getElementById('open-changelog'),
+  },
+  timeline: document.getElementById('session-timeline'),
 };
 
-const state = {
-  data: loadData(),
-  activeView: 'dashboard',
-  activeSubject: 'Mathematics',
-};
+const defaultConversations = () => [
+  {
+    id: crypto.randomUUID(),
+    title: 'Research log: Ocean plastics',
+    summary: 'Navigator curates impact data for NGO briefing',
+    lastInteraction: '2 minutes ago',
+    pinned: true,
+    unread: 0,
+    tags: ['environment', 'briefing'],
+    messages: [
+      {
+        role: 'assistant',
+        author: 'Nebula Navigator',
+        time: '09:10',
+        content: [
+          'Ready when you are. I have briefs on ocean plastics impacts, policy measures, and NGO-led pilot programs. Where shall we dive in?',
+        ],
+        cues: ['📎 3 curated briefs attached'],
+      },
+      {
+        role: 'user',
+        author: 'You',
+        time: '09:12',
+        content: [
+          'Summarize community-level actions that reduced shoreline waste in the last five years. Focus on metrics we can cite.',
+        ],
+        cues: [],
+      },
+      {
+        role: 'assistant',
+        author: 'Nebula Navigator',
+        time: '09:13',
+        content: [
+          'Here are the programs with measurable shoreline impact:',
+          {
+            type: 'list',
+            items: [
+              'Baltic Blue Network: volunteer cleanup + deposit incentives → 27% litter reduction in 18 months (source: Riga civic report, 2023).',
+              'Queensland Tidal Guardians: smart bins + school partnerships → 14 tonnes removed, 82% student participation (source: state audit, 2024).',
+              'Pacific Floating Barriers Trial: fishing cooperative-led → trapped 3.1 tonnes microplastics quarterly (source: PFB coalition log, 2024).',
+            ],
+          },
+          'Need visuals or deeper interviews? I can surface them next.',
+        ],
+        cues: ['Last refreshed 6 days ago'],
+      },
+    ],
+  },
+  {
+    id: crypto.randomUUID(),
+    title: 'Product narrative rehearsal',
+    summary: 'Story arc building for launch keynote',
+    lastInteraction: 'Yesterday',
+    pinned: false,
+    unread: 2,
+    tags: ['product', 'keynote'],
+    messages: [
+      {
+        role: 'assistant',
+        author: 'Nebula Navigator',
+        time: '19:44',
+        content: [
+          'Rehearsal is staged. What angle do you want highlighted first—customer wins, technical breakthroughs, or roadmap signals?',
+        ],
+        cues: ['Storyboard v5 in thread'],
+      },
+      {
+        role: 'user',
+        author: 'You',
+        time: '19:46',
+        content: ['Start with the support metrics shift after the pilot cohort.'],
+        cues: [],
+      },
+      {
+        role: 'assistant',
+        author: 'Nebula Navigator',
+        time: '19:47',
+        content: [
+          'Highlighting the change curve:',
+          {
+            type: 'list',
+            items: [
+              'Ticket resolution time dropped from 18h → 3.4h after workflow automation.',
+              'Net promoter score climbed from 14 → 46 within 2 quarters.',
+              '92% of pilot accounts adopted the contextual help center in week one.',
+            ],
+          },
+          'I can pair each with customer quotes for the keynote slides.',
+        ],
+        cues: ['📌 Clip pinned to slide 3'],
+      },
+    ],
+  },
+  {
+    id: crypto.randomUUID(),
+    title: 'Policy desk: Urban mobility',
+    summary: 'Navigator tracking municipal hearings and deadlines',
+    lastInteraction: '3 days ago',
+    pinned: false,
+    unread: 0,
+    tags: ['policy', 'mobility'],
+    messages: [
+      {
+        role: 'assistant',
+        author: 'Nebula Navigator',
+        time: '08:05',
+        content: [
+          'Standing by with your city-by-city tracker. Berlin hearing moved up to May 28, and Toronto just published draft ordinance notes.',
+        ],
+        cues: ['2 reminders armed'],
+      },
+    ],
+  },
+];
 
-function loadData() {
+const defaultState = () => ({
+  theme: 'dark',
+  density: 'standard',
+  conversations: defaultConversations(),
+  activeConversationId: null,
+  quickPrompts: [
+    'Draft a follow-up summary based on our latest exchange',
+    'List three questions to deepen understanding',
+    'Show my open action items for this topic',
+    'Compare this with last quarter\'s briefing',
+  ],
+  focusModes: [
+    'Evidence-first briefs',
+    'Interview prep partner',
+    'Policy window tracking',
+    'Narrative rehearsal',
+  ],
+  traits: [
+    'Prefers cited, human-authored research',
+    'Surfaces gaps and next-step prompts',
+    'Never hallucinates—only verified material',
+    'Tracks commitments and deadlines you set',
+  ],
+  metrics: {
+    totalMessages: 48,
+    curatedSources: 17,
+    decisionsLogged: 9,
+    remindersArmed: 4,
+  },
+  events: [
+    { time: '08:12', detail: 'Navigator summarized Baltic pilot interview notes' },
+    { time: '09:02', detail: 'Reminder armed: Berlin mobility hearing' },
+    { time: '09:40', detail: 'Checklist created: launch keynote rehearsal' },
+  ],
+  knowledge: [
+    {
+      title: 'Ocean plastics data vault',
+      description: 'Benchmarks from civic audits, NGO reports, and port authority inspections across 17 coastal regions.',
+      updated: 'Updated 6 days ago',
+    },
+    {
+      title: 'Customer advocacy narratives',
+      description: 'First-person quotes and support metrics ready for keynotes and stakeholder briefings.',
+      updated: 'Updated yesterday',
+    },
+    {
+      title: 'Mobility policy tracker',
+      description: 'Hearings, deadlines, and bill summaries for 12 municipalities piloting adaptive transit.',
+      updated: 'Updated 3 hours ago',
+    },
+  ],
+  playbooks: [
+    {
+      title: 'Rapid research brief',
+      description: 'Compile multi-source summary with verified citations in under 10 minutes.',
+      duration: '6 steps',
+    },
+    {
+      title: 'Stakeholder prep',
+      description: 'Map motivations, prior commitments, and unanswered questions before a meeting.',
+      duration: '8 steps',
+    },
+    {
+      title: 'Post-mortem catalyst',
+      description: 'Guide teams through reflective analysis without AI-generated filler.',
+      duration: '5 prompts',
+    },
+  ],
+  timeline: [
+    'Opened research workspace',
+    'Captured field interview findings',
+    'Navigator summarized highlights',
+    'Outlined action items for follow-up',
+  ],
+  changelog: [
+    {
+      version: '2.7.18',
+      date: 'May 14, 2024',
+      notes: [
+        'Added quick prompt dock and refreshed composer actions.',
+        'Knowledge vault browsing now supports keyword filters.',
+        'Improved export formatting with human-authored annotations.',
+      ],
+    },
+    {
+      version: '2.6.90',
+      date: 'April 30, 2024',
+      notes: [
+        'New compact density toggle for tight work sessions.',
+        'Timeline now tracks Navigator actions with timestamps.',
+      ],
+    },
+  ],
+});
+
+function loadState() {
   try {
-    const stored = localStorage.getItem(storageKey);
-    if (stored) {
-      return JSON.parse(stored);
+    const stored = localStorage.getItem(STORAGE_KEY);
+    if (!stored) return defaultState();
+    const parsed = JSON.parse(stored);
+    return {
+      ...defaultState(),
+      ...parsed,
+    };
+  } catch (error) {
+    console.warn('Failed to parse state, using defaults', error);
+    return defaultState();
+  }
+}
+
+let state = loadState();
+
+function persistState() {
+  try {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+  } catch (error) {
+    console.warn('Unable to persist state', error);
+  }
+}
+
+function ensureActiveConversation() {
+  if (!state.conversations.length) {
+    state.conversations = defaultConversations();
+  }
+  if (!state.activeConversationId) {
+    state.activeConversationId = state.conversations[0]?.id ?? null;
+  }
+}
+
+ensureActiveConversation();
+
+function formatList(items) {
+  const list = document.createElement('ul');
+  list.className = 'bullet-list';
+  items.forEach((item) => {
+    const li = document.createElement('li');
+    li.textContent = item;
+    list.appendChild(li);
+  });
+  return list;
+}
+
+function renderMessages(conversation) {
+  dom.messageStream.innerHTML = '';
+
+  if (!conversation || !conversation.messages.length) {
+    const empty = document.createElement('div');
+    empty.className = 'empty-state';
+    empty.innerHTML = `
+      <h3>No messages yet</h3>
+      <p>Guide Nebula Navigator with a clear instruction or import a playbook to get started.</p>
+    `;
+    dom.messageStream.appendChild(empty);
+    return;
+  }
+
+  conversation.messages.forEach((message) => {
+    const container = document.createElement('article');
+    container.className = `message ${message.role === 'user' ? 'is-user' : 'is-assistant'}`;
+
+    const avatar = document.createElement('div');
+    avatar.className = 'avatar';
+    avatar.textContent = message.role === 'user' ? 'YOU' : 'NN';
+
+    const bubble = document.createElement('div');
+    bubble.className = 'message__bubble';
+
+    const header = document.createElement('header');
+    const name = document.createElement('h4');
+    name.textContent = message.author;
+    const time = document.createElement('time');
+    time.textContent = message.time;
+
+    header.appendChild(name);
+    header.appendChild(time);
+    bubble.appendChild(header);
+
+    const body = document.createElement('div');
+    body.className = 'message__body';
+
+    message.content.forEach((chunk) => {
+      if (typeof chunk === 'string') {
+        const paragraph = document.createElement('p');
+        paragraph.textContent = chunk;
+        body.appendChild(paragraph);
+      } else if (chunk.type === 'list') {
+        body.appendChild(formatList(chunk.items));
+      }
+    });
+
+    bubble.appendChild(body);
+
+    const footer = document.createElement('footer');
+    footer.className = 'message__footer';
+    const cues = document.createElement('span');
+    cues.textContent = message.cues?.join(' • ') || '';
+    const actions = document.createElement('div');
+    actions.className = 'actions';
+
+    if (message.role === 'assistant') {
+      ['Copy', 'Quote', 'Save'].forEach((label) => {
+        const btn = document.createElement('button');
+        btn.className = 'ghost';
+        btn.type = 'button';
+        btn.textContent = label;
+        actions.appendChild(btn);
+      });
+    } else {
+      const btn = document.createElement('button');
+      btn.className = 'ghost';
+      btn.type = 'button';
+      btn.textContent = 'Edit';
+      actions.appendChild(btn);
     }
-  } catch (error) {
-    console.warn('Unable to read local data', error);
-  }
-  return structuredClone(defaultData);
-}
 
-function persistData() {
-  try {
-    localStorage.setItem(storageKey, JSON.stringify(state.data));
-  } catch (error) {
-    console.warn('Unable to save local data', error);
-  }
-}
+    footer.appendChild(cues);
+    footer.appendChild(actions);
+    bubble.appendChild(footer);
 
-function computeAverage(marks) {
-  if (!marks || marks.length === 0) return 0;
-  const total = marks.reduce((sum, mark) => sum + mark, 0);
-  return Math.round((total / marks.length) * 10) / 10;
-}
-
-function renderDashboard() {
-  const attendanceMetric = document.querySelector('#metric-attendance .value');
-  const performanceMetric = document.querySelector('#metric-performance .value');
-  const completionMetric = document.querySelector('#metric-completion .value');
-
-  const attendanceAvg = Math.round(
-    state.data.students.reduce((sum, student) => sum + student.attendance.present, 0) /
-      state.data.students.length
-  );
-  attendanceMetric.textContent = attendanceAvg;
-
-  const subjectMarks = Object.values(state.data.students[0].marks).map((_, index) => index);
-  const flattened = state.data.students.flatMap((student) =>
-    Object.values(student.marks).flat()
-  );
-  const performanceAvg = computeAverage(flattened);
-  performanceMetric.textContent = performanceAvg.toFixed(1);
-
-  const completion = Math.round(
-    (state.data.assignments.filter((a) => a.status === 'Completed').length /
-      Math.max(state.data.assignments.length, 1)) *
-      100
-  );
-  completionMetric.textContent = completion;
-
-  renderAssessmentList();
-  renderCommunicationTimeline();
-  renderAgenda();
-}
-
-function renderAssessmentList() {
-  const list = document.getElementById('assessment-list');
-  list.innerHTML = '';
-  const upcoming = state.data.students
-    .flatMap((student) => student.upcomingAssessments.map((a) => ({ ...a, student: student.name })))
-    .sort((a, b) => new Date(a.dueDate) - new Date(b.dueDate))
-    .slice(0, 5);
-
-  upcoming.forEach((item) => {
-    const li = document.createElement('li');
-    li.innerHTML = `<strong>${item.title}</strong><span class="meta">${new Date(
-      item.dueDate
-    ).toLocaleDateString()} · ${item.student}</span>`;
-    list.appendChild(li);
-  });
-}
-
-function renderCommunicationTimeline() {
-  const timeline = document.getElementById('communication-timeline');
-  timeline.innerHTML = '';
-  const sorted = [...state.data.communications].sort(
-    (a, b) => new Date(b.date) - new Date(a.date)
-  );
-  sorted.slice(0, 4).forEach((entry) => {
-    const li = document.createElement('li');
-    li.innerHTML = `
-      <div class="timeline-point"></div>
-      <div>
-        <h4>${entry.recipient}</h4>
-        <div class="meta">
-          <span>${entry.channel}</span>
-          <span>${new Date(entry.date).toLocaleString()}</span>
-        </div>
-        <p>${entry.message}</p>
-      </div>`;
-    timeline.appendChild(li);
-  });
-}
-
-function renderAgenda() {
-  const list = document.getElementById('agenda-list');
-  list.innerHTML = '';
-  state.data.agenda.forEach((item) => {
-    const li = document.createElement('li');
-    li.innerHTML = `<strong>${item.time} · ${item.title}</strong><span>${item.details}</span>`;
-    list.appendChild(li);
-  });
-}
-
-function gradeLevel(grade) {
-  if (grade >= 9) return 'high';
-  if (grade >= 7) return 'medium';
-  return 'low';
-}
-
-function renderGradebook() {
-  const select = document.getElementById('subject-select');
-  const subjects = Object.keys(state.data.students[0].marks);
-  select.innerHTML = subjects
-    .map((subject) => `<option value="${subject}">${subject}</option>`)
-    .join('');
-  if (!subjects.includes(state.activeSubject)) {
-    state.activeSubject = subjects[0];
-  }
-  select.value = state.activeSubject;
-
-  const tbody = document.getElementById('gradebook-body');
-  tbody.innerHTML = '';
-  state.data.students.forEach((student) => {
-    const marks = student.marks[state.activeSubject] || [];
-    const avg = computeAverage(marks);
-    const latest = marks[marks.length - 1] ?? '–';
-
-    const row = document.createElement('tr');
-    row.innerHTML = `
-      <td>
-        <div class="student-cell">
-          <strong>${student.name}</strong>
-          <div class="meta">${student.gradeLevel}</div>
-        </div>
-      </td>
-      <td class="align-center">
-        ${marks
-          .map(
-            (mark, index) =>
-              `<span class="grade-chip" data-index="${index}" data-student="${student.id}" data-level="${gradeLevel(
-                mark
-              )}">${mark}</span>`
-          )
-          .join('')}
-        <button class="ghost" data-action="add-mark" data-student="${student.id}">+ Add</button>
-      </td>
-      <td class="align-center">${avg.toFixed(1)}</td>
-      <td class="align-center">${latest}</td>`;
-    tbody.appendChild(row);
-  });
-}
-
-function renderStudentList(filter = 'all', searchTerm = '') {
-  const list = document.getElementById('student-list');
-  const template = document.getElementById('student-list-item-template');
-  list.innerHTML = '';
-
-  const filtered = state.data.students.filter((student) => {
-    const matchesFilter =
-      filter === 'all' ? true : filter === 'support' ? student.tags.includes('Support') : student.tags.includes('Celebrate');
-    const matchesSearch = student.name.toLowerCase().includes(searchTerm.toLowerCase());
-    return matchesFilter && matchesSearch;
+    container.appendChild(avatar);
+    container.appendChild(bubble);
+    dom.messageStream.appendChild(container);
   });
 
-  filtered.forEach((student) => {
-    const clone = template.content.cloneNode(true);
-    clone.querySelector('[data-field="initials"]').textContent = student.name
+  dom.messageStream.scrollTop = dom.messageStream.scrollHeight;
+}
+
+function renderConversationList(filter = '') {
+  dom.conversationList.innerHTML = '';
+
+  const conversations = state.conversations
+    .filter((conversation) => {
+      if (!filter) return true;
+      const text = `${conversation.title} ${conversation.summary}`.toLowerCase();
+      return text.includes(filter.toLowerCase());
+    })
+    .sort((a, b) => Number(b.pinned) - Number(a.pinned));
+
+  conversations.forEach((conversation) => {
+    const card = document.createElement('button');
+    card.type = 'button';
+    card.className = 'conversation-card';
+    if (conversation.id === state.activeConversationId) {
+      card.classList.add('is-active');
+    }
+
+    const avatar = document.createElement('div');
+    avatar.className = 'avatar';
+    avatar.textContent = conversation.title
       .split(' ')
-      .map((part) => part[0])
-      .join('');
-    clone.querySelector('[data-field="name"]').textContent = student.name;
-    clone.querySelector('[data-field="meta"]').textContent = `${student.gradeLevel} · ${student.focusAreas[0]}`;
+      .map((word) => word[0])
+      .join('')
+      .slice(0, 2)
+      .toUpperCase();
 
-    const badges = clone.querySelector('[data-field="badges"]');
-    student.tags.forEach((tag) => {
-      const badge = document.createElement('span');
-      badge.className = 'badge';
-      badge.textContent = tag;
-      badges.appendChild(badge);
+    const body = document.createElement('div');
+    const heading = document.createElement('h4');
+    heading.textContent = conversation.title;
+    const summary = document.createElement('p');
+    summary.textContent = conversation.summary;
+
+    body.appendChild(heading);
+    body.appendChild(summary);
+
+    const meta = document.createElement('div');
+    meta.className = 'tag-list';
+    conversation.tags?.forEach((tag) => {
+      const chip = document.createElement('span');
+      chip.className = 'tag';
+      chip.textContent = tag;
+      meta.appendChild(chip);
     });
 
-    const pill = clone.querySelector('.student-pill');
-    pill.dataset.student = student.id;
-    pill.addEventListener('click', () => selectStudent(student.id));
-    list.appendChild(clone);
-  });
-}
+    body.appendChild(meta);
+    card.appendChild(avatar);
+    card.appendChild(body);
 
-function selectStudent(studentId) {
-  const student = state.data.students.find((s) => s.id === studentId);
-  if (!student) return;
-
-  document.querySelectorAll('.student-pill').forEach((pill) => {
-    pill.classList.toggle('active', pill.dataset.student === studentId);
-  });
-
-  const profile = document.getElementById('student-profile');
-  profile.innerHTML = `
-    <header>
-      <div class="identity">
-        <div class="avatar">${student.name
-          .split(' ')
-          .map((part) => part[0])
-          .join('')}</div>
-        <div>
-          <h3>${student.name}</h3>
-          <p>${student.gradeLevel}</p>
-        </div>
-      </div>
-      <div>
-        <button class="secondary" data-action="family-email">Email family</button>
-      </div>
-    </header>
-    <section>
-      <h4>Snapshot</h4>
-      <div class="stat-blocks">
-        <div class="stat-block"><span>Attendance</span><span>${student.attendance.present}%</span></div>
-        <div class="stat-block"><span>Latest average</span><span>${computeAverage(
-          Object.values(student.marks).flat()
-        ).toFixed(1)}</span></div>
-        <div class="stat-block"><span>Focus areas</span><span>${student.focusAreas.length}</span></div>
-      </div>
-    </section>
-    <section>
-      <h4>Learning narrative</h4>
-      <p>${student.behaviour}</p>
-      <p>${student.supportPlan}</p>
-    </section>
-    <section>
-      <h4>Upcoming checkpoints</h4>
-      <ul class="highlight-list">
-        ${student.upcomingAssessments
-          .map(
-            (assessment) =>
-              `<li><strong>${assessment.title}</strong><div class="meta">Due ${new Date(
-                assessment.dueDate
-              ).toLocaleDateString()}</div></li>`
-          )
-          .join('')}
-      </ul>
-    </section>
-    <section>
-      <h4>Family contact</h4>
-      <p>${student.parents.guardian} · ${student.parents.contact}</p>
-      <p>${student.parents.email}</p>
-    </section>
-    <section>
-      <h4>Notes from you</h4>
-      <ul class="highlight-list">
-        ${student.notes.map((note) => `<li>${note}</li>`).join('')}
-      </ul>
-    </section>
-  `;
-}
-
-function renderAssignments() {
-  const list = document.getElementById('assignment-list');
-  const count = document.getElementById('assignment-count');
-  const template = document.getElementById('assignment-item-template');
-  list.innerHTML = '';
-  const activeAssignments = state.data.assignments.filter((assignment) => assignment.status !== 'Archived');
-  count.textContent = activeAssignments.length;
-
-  activeAssignments
-    .sort((a, b) => new Date(a.dueDate) - new Date(b.dueDate))
-    .forEach((assignment) => {
-      const clone = template.content.cloneNode(true);
-      clone.querySelector('[data-field="title"]').textContent = assignment.title;
-      clone.querySelector('[data-field="subject"]').textContent = assignment.subject;
-      clone.querySelector('[data-field="due"]').textContent = `Due ${new Date(
-        assignment.dueDate
-      ).toLocaleDateString()}`;
-      clone.querySelector('[data-field="description"]').textContent = assignment.description;
-
-      const container = clone.querySelector('.assignment-item');
-      container.dataset.assignment = assignment.id;
-
-      clone.querySelector('[data-action="complete"]').addEventListener('click', () => {
-        updateAssignmentStatus(assignment.id, 'Completed');
-      });
-
-      clone.querySelector('[data-action="remove"]').addEventListener('click', () => {
-        updateAssignmentStatus(assignment.id, 'Archived');
-      });
-
-      list.appendChild(clone);
+    card.addEventListener('click', () => {
+      state.activeConversationId = conversation.id;
+      persistState();
+      hydrateUI();
     });
-}
 
-function updateAssignmentStatus(id, status) {
-  const assignment = state.data.assignments.find((item) => item.id === id);
-  if (!assignment) return;
-  assignment.status = status;
-  persistData();
-  renderAssignments();
-  renderDashboard();
-  showSnackbar(status === 'Completed' ? 'Assignment marked complete' : 'Assignment archived');
-}
-
-function renderCommunications() {
-  const list = document.getElementById('communication-list');
-  const template = document.getElementById('communication-item-template');
-  list.innerHTML = '';
-  const sorted = [...state.data.communications].sort(
-    (a, b) => new Date(b.date) - new Date(a.date)
-  );
-  sorted.forEach((item) => {
-    const clone = template.content.cloneNode(true);
-    clone.querySelector('[data-field="recipient"]').textContent = item.recipient;
-    clone.querySelector('[data-field="channel"]').textContent = item.channel;
-    clone.querySelector('[data-field="date"]').textContent = new Date(item.date).toLocaleString();
-    clone.querySelector('[data-field="message"]').textContent = item.message;
-    list.appendChild(clone);
+    dom.conversationList.appendChild(card);
   });
-}
 
-function renderInsights() {
-  const subjectSelect = document.getElementById('reports-subject');
-  const subjects = Object.keys(state.data.students[0].marks);
-  subjectSelect.innerHTML = subjects
-    .map((subject) => `<option value="${subject}">${subject}</option>`)
-    .join('');
-  subjectSelect.value = state.activeSubject;
-
-  renderSubjectMastery(state.activeSubject);
-  renderAttendanceSpotlight();
-  renderCelebrations();
-}
-
-function renderSubjectMastery(subject) {
-  const list = document.getElementById('subject-masteries');
-  list.innerHTML = '';
-
-  state.data.students
-    .map((student) => ({
-      name: student.name,
-      average: computeAverage(student.marks[subject]),
-    }))
-    .sort((a, b) => b.average - a.average)
-    .forEach((item) => {
-      const li = document.createElement('li');
-      const percent = Math.round((item.average / 10) * 100);
-      li.innerHTML = `
-        <div class="meta"><strong>${item.name}</strong><span>${item.average.toFixed(1)}</span></div>
-        <div class="bar-track"><div class="bar-fill" style="width:${percent}%"></div></div>
-      `;
-      list.appendChild(li);
-    });
-}
-
-function renderAttendanceSpotlight() {
-  const list = document.getElementById('attendance-spotlight');
-  list.innerHTML = '';
-
-  const sorted = [...state.data.students].sort(
-    (a, b) => a.attendance.present - b.attendance.present
-  );
-
-  sorted.forEach((student) => {
-    const li = document.createElement('li');
-    li.innerHTML = `
-      <strong>${student.name}</strong>
-      <div class="meta">${student.attendance.present}% present · ${student.attendance.absent} absences</div>
+  if (!conversations.length) {
+    const empty = document.createElement('div');
+    empty.className = 'empty-state';
+    empty.innerHTML = `
+      <h3>No sessions found</h3>
+      <p>Try a different phrase or start a new NebulaChat session.</p>
     `;
-    list.appendChild(li);
+    dom.conversationList.appendChild(empty);
+  }
+}
+
+function renderQuickPrompts() {
+  dom.promptSuggestions.innerHTML = '';
+  state.quickPrompts.forEach((prompt) => {
+    const chip = document.createElement('button');
+    chip.type = 'button';
+    chip.className = 'suggestion';
+    chip.textContent = prompt;
+    chip.addEventListener('click', () => {
+      dom.messageInput.value = prompt;
+      dom.messageInput.focus();
+    });
+    dom.promptSuggestions.appendChild(chip);
   });
 }
 
-function renderCelebrations() {
-  const list = document.getElementById('celebrations');
-  list.innerHTML = '';
+function renderFocusModes() {
+  dom.focusModes.innerHTML = '';
+  state.focusModes.forEach((mode) => {
+    const pill = document.createElement('span');
+    pill.className = 'tag';
+    pill.textContent = mode;
+    dom.focusModes.appendChild(pill);
+  });
+}
 
-  state.data.students.forEach((student) => {
+function renderTraits() {
+  dom.assistantTraits.innerHTML = '';
+  state.traits.forEach((trait) => {
     const li = document.createElement('li');
-    const highestSubject = Object.entries(student.marks).sort(
-      (a, b) => computeAverage(b[1]) - computeAverage(a[1])
-    )[0];
-    li.innerHTML = `
-      <strong>${student.name}</strong>
-      <div class="meta">${highestSubject[0]} · ${computeAverage(highestSubject[1]).toFixed(1)} avg</div>
-      <p>${student.wellbeing}</p>
+    li.textContent = trait;
+    dom.assistantTraits.appendChild(li);
+  });
+}
+
+function renderMetrics() {
+  dom.metrics.innerHTML = '';
+  const metrics = [
+    { label: 'Messages exchanged', value: state.metrics.totalMessages },
+    { label: 'Curated sources', value: state.metrics.curatedSources },
+    { label: 'Decisions logged', value: state.metrics.decisionsLogged },
+    { label: 'Reminders armed', value: state.metrics.remindersArmed },
+  ];
+
+  metrics.forEach((metric) => {
+    const container = document.createElement('div');
+    container.className = 'metric';
+    container.innerHTML = `<strong>${metric.value}</strong><span>${metric.label}</span>`;
+    dom.metrics.appendChild(container);
+  });
+}
+
+function renderEvents() {
+  dom.timelineEvents.innerHTML = '';
+  state.events.forEach((event) => {
+    const item = document.createElement('div');
+    item.className = 'timeline-item';
+    item.innerHTML = `<span class="time">${event.time}</span><span class="detail">${event.detail}</span>`;
+    dom.timelineEvents.appendChild(item);
+  });
+}
+
+function renderKnowledge() {
+  dom.knowledgeList.innerHTML = '';
+  state.knowledge.forEach((entry) => {
+    const card = document.createElement('article');
+    card.className = 'knowledge-card';
+    card.innerHTML = `
+      <h4>${entry.title}</h4>
+      <p>${entry.description}</p>
+      <span class="tag">${entry.updated}</span>
     `;
-    list.appendChild(li);
+    dom.knowledgeList.appendChild(card);
   });
 }
 
-function showSnackbar(message) {
-  const snackbar = document.getElementById('snackbar');
-  snackbar.textContent = message;
-  snackbar.classList.add('visible');
-  setTimeout(() => snackbar.classList.remove('visible'), 2500);
+function renderPlaybooks() {
+  dom.playbookGrid.innerHTML = '';
+  state.playbooks.forEach((playbook) => {
+    const card = document.createElement('div');
+    card.className = 'playbook-card';
+    card.innerHTML = `
+      <h4>${playbook.title}</h4>
+      <p>${playbook.description}</p>
+      <span class="tag">${playbook.duration}</span>
+    `;
+    dom.playbookGrid.appendChild(card);
+  });
 }
 
-function setupNavigation() {
-  document.querySelectorAll('.nav-item').forEach((button) => {
-    button.addEventListener('click', () => {
-      const target = button.dataset.target;
-      state.activeView = target;
-      document.querySelectorAll('[data-view]').forEach((section) => {
-        section.classList.toggle('hidden', section.id !== target);
-      });
-      document.querySelectorAll('.nav-item').forEach((nav) => {
-        nav.classList.toggle('active', nav === button);
-      });
+function renderTimelinePills() {
+  dom.sessionTimeline.innerHTML = '';
+  state.timeline.forEach((item) => {
+    const pill = document.createElement('span');
+    pill.className = 'timeline-pill';
+    pill.textContent = item;
+    dom.sessionTimeline.appendChild(pill);
+  });
+}
 
-      if (target === 'gradebook') {
-        renderGradebook();
-      }
-      if (target === 'students') {
-        renderStudentList();
-      }
-      if (target === 'assignments') {
-        renderAssignments();
-      }
-      if (target === 'communication') {
-        renderCommunications();
-      }
-      if (target === 'reports') {
-        renderInsights();
-      }
+function renderDialogs() {
+  const playbookLibrary = document.getElementById('playbook-library');
+  playbookLibrary.innerHTML = '';
+  state.playbooks.forEach((playbook) => {
+    const card = document.createElement('div');
+    card.className = 'dialog-card';
+    card.innerHTML = `
+      <h4>${playbook.title}</h4>
+      <p>${playbook.description}</p>
+      <div class="meta"><span>${playbook.duration}</span><span>Verified by Navigator</span></div>
+    `;
+    playbookLibrary.appendChild(card);
+  });
+
+  const knowledgeLibrary = document.getElementById('knowledge-library');
+  knowledgeLibrary.innerHTML = '';
+  state.knowledge.forEach((entry) => {
+    const card = document.createElement('div');
+    card.className = 'dialog-card';
+    card.innerHTML = `
+      <h4>${entry.title}</h4>
+      <p>${entry.description}</p>
+      <div class="meta"><span>${entry.updated}</span><span>Navigator curated</span></div>
+    `;
+    knowledgeLibrary.appendChild(card);
+  });
+
+  const changelogContent = document.getElementById('changelog-content');
+  changelogContent.innerHTML = '';
+  state.changelog.forEach((entry) => {
+    const card = document.createElement('div');
+    card.className = 'dialog-card';
+    const notes = entry.notes.map((note) => `<li>${note}</li>`).join('');
+    card.innerHTML = `
+      <h4>Version ${entry.version}</h4>
+      <div class="meta"><span>${entry.date}</span><span>Studio release</span></div>
+      <ul>${notes}</ul>
+    `;
+    changelogContent.appendChild(card);
+  });
+}
+
+function hydrateUI() {
+  ensureActiveConversation();
+  const conversation = state.conversations.find((c) => c.id === state.activeConversationId);
+
+  dom.app.dataset.theme = state.theme;
+  dom.toggleTheme.setAttribute('aria-pressed', state.theme === 'dark');
+  dom.app.dataset.density = state.density === 'compact' ? 'compact' : 'standard';
+  dom.toggleCompact.setAttribute('aria-pressed', state.density === 'compact');
+
+  dom.chatTitle.textContent = conversation?.title ?? 'Nebula Navigator';
+  renderConversationList(dom.sessionSearch.value || '');
+  renderMessages(conversation);
+  renderQuickPrompts();
+  renderFocusModes();
+  renderTraits();
+  renderMetrics();
+  renderEvents();
+  renderKnowledge();
+  renderPlaybooks();
+  renderTimelinePills();
+  renderDialogs();
+
+  dom.pinButton.setAttribute('aria-pressed', conversation?.pinned || false);
+  dom.pinButton.textContent = conversation?.pinned ? '📌 Pinned' : '📌 Pin';
+  dom.footerSync.textContent = 'just now';
+}
+
+function composeUserMessage(content) {
+  return {
+    role: 'user',
+    author: 'You',
+    time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+    content: [content],
+    cues: [],
+  };
+}
+
+function composeBotReply(userMessage) {
+  const responses = [
+    {
+      match: /summary|summarize/i,
+      reply: [
+        'Here is a human-curated summary referencing material we already filed:',
+        {
+          type: 'list',
+          items: [
+            'Key findings distilled into three focus areas with cited sources.',
+            'Gaps Navigator spotted that might need manual confirmation.',
+            'Suggested follow-up steps and who owns them.',
+          ],
+        },
+        'Need me to open the source notes? I have them indexed.',
+      ],
+    },
+    {
+      match: /compare|difference|versus/i,
+      reply: [
+        'Let’s compare based on the datasets we track. I will list deltas and highlight where numbers shifted beyond the agreed threshold.',
+        {
+          type: 'list',
+          items: [
+            'Metric deltas with citations and measurement dates.',
+            'Context describing why the shift occurred.',
+            'Signals Navigator recommends monitoring next.',
+          ],
+        },
+      ],
+    },
+    {
+      match: /action|todo|task/i,
+      reply: [
+        'Pulling from the action tracker. You currently have 4 outstanding commitments:',
+        {
+          type: 'list',
+          items: [
+            'Send NGO briefing draft for review (due tomorrow).',
+            'Confirm keynote run-through with Ava (pending reply).',
+            'Share municipal policy digest with exec team (scheduled Friday).',
+            'Upload annotated interview notes to workspace (requested by Priya).',
+          ],
+        },
+        'Want me to nudge any of these or reprioritize?',
+      ],
+    },
+  ];
+
+  const matched = responses.find((entry) => entry.match.test(userMessage));
+  if (matched) return matched.reply;
+
+  return [
+    'Understood. I will work within our verified notes and respond with grounded material.',
+    'If you need citations or supporting evidence, just say “Show references”.',
+  ];
+}
+
+function handleSendMessage(event) {
+  event.preventDefault();
+  const content = dom.messageInput.value.trim();
+  if (!content) return;
+
+  const conversation = state.conversations.find((c) => c.id === state.activeConversationId);
+  if (!conversation) return;
+
+  const userMessage = composeUserMessage(content);
+  conversation.messages.push(userMessage);
+  state.metrics.totalMessages += 1;
+  dom.messageInput.value = '';
+  renderMessages(conversation);
+  persistState();
+
+  setTimeout(() => {
+    const reply = composeBotReply(content);
+    conversation.messages.push({
+      role: 'assistant',
+      author: 'Nebula Navigator',
+      time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+      content: reply,
+      cues: ['Manual review queued'],
     });
-  });
+    state.metrics.totalMessages += 1;
+    renderMessages(conversation);
+    persistState();
+  }, 600);
 }
 
-function setupGlobalSearch() {
-  const input = document.getElementById('global-search');
-  input.addEventListener('input', (event) => {
-    const term = event.target.value.toLowerCase();
-    const suggestions = state.data.students
-      .filter((student) => student.name.toLowerCase().includes(term))
-      .slice(0, 3)
-      .map((student) => student.name)
-      .join(', ');
-    input.setAttribute('title', suggestions);
-  });
+function handleNewSession() {
+  const id = crypto.randomUUID();
+  const conversation = {
+    id,
+    title: 'Untitled session',
+    summary: 'No summary yet—Navigator waiting for direction.',
+    lastInteraction: 'moments ago',
+    pinned: false,
+    unread: 0,
+    tags: ['draft'],
+    messages: [
+      {
+        role: 'assistant',
+        author: 'Nebula Navigator',
+        time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+        content: [
+          'Welcome back. Ready to track a new thread? Share what we are exploring and I will set up the workspace.',
+        ],
+        cues: ['No external sources attached'],
+      },
+    ],
+  };
+  state.conversations.unshift(conversation);
+  state.activeConversationId = id;
+  persistState();
+  hydrateUI();
 }
 
-function setupGradebookInteractions() {
-  document.getElementById('subject-select').addEventListener('change', (event) => {
-    state.activeSubject = event.target.value;
-    renderGradebook();
-    renderInsights();
-  });
-
-  document.getElementById('gradebook').addEventListener('click', (event) => {
-    const target = event.target;
-    if (target.matches('.grade-chip')) {
-      const student = target.dataset.student;
-      const index = Number(target.dataset.index);
-      const mark = prompt('Update mark (1-10):', target.textContent);
-      if (!mark) return;
-      const numeric = Number(mark);
-      if (Number.isNaN(numeric) || numeric < 1 || numeric > 10) {
-        showSnackbar('Enter a number between 1 and 10');
-        return;
-      }
-      const studentRecord = state.data.students.find((s) => s.id === student);
-      studentRecord.marks[state.activeSubject][index] = numeric;
-      persistData();
-      renderGradebook();
-      renderInsights();
-      showSnackbar('Mark updated');
-    }
-
-    if (target.dataset.action === 'add-mark') {
-      const student = target.dataset.student;
-      const mark = prompt('Add new mark (1-10):');
-      if (!mark) return;
-      const numeric = Number(mark);
-      if (Number.isNaN(numeric) || numeric < 1 || numeric > 10) {
-        showSnackbar('Enter a number between 1 and 10');
-        return;
-      }
-      const studentRecord = state.data.students.find((s) => s.id === student);
-      studentRecord.marks[state.activeSubject].push(numeric);
-      persistData();
-      renderGradebook();
-      renderInsights();
-      showSnackbar('New mark added');
-    }
-  });
-
-  document.getElementById('export-gradebook').addEventListener('click', () => {
-    window.print();
-  });
+function handleSearch(event) {
+  renderConversationList(event.target.value);
 }
 
-function setupStudentFilters() {
-  const search = document.getElementById('student-search');
-  const filters = document.querySelectorAll('.filters button');
-
-  search.addEventListener('input', (event) => {
-    renderStudentList(document.querySelector('.filters button.active')?.dataset.filter ?? 'all', event.target.value);
-  });
-
-  filters.forEach((button) => {
-    button.addEventListener('click', () => {
-      filters.forEach((btn) => btn.classList.remove('active'));
-      button.classList.add('active');
-      renderStudentList(button.dataset.filter, search.value);
-    });
-  });
-
-  filters[0].classList.add('active');
+function handlePin() {
+  const conversation = state.conversations.find((c) => c.id === state.activeConversationId);
+  if (!conversation) return;
+  conversation.pinned = !conversation.pinned;
+  persistState();
+  hydrateUI();
 }
 
-function setupAssignmentForm() {
-  const form = document.getElementById('assignment-form');
-  form.addEventListener('submit', (event) => {
+function handleExport() {
+  const conversation = state.conversations.find((c) => c.id === state.activeConversationId);
+  if (!conversation) return;
+  const transcript = conversation.messages
+    .map((message) => `${message.author} (${message.time})\n${message.content
+      .map((chunk) => (typeof chunk === 'string' ? chunk : `• ${chunk.items.join('\n• ')}`))
+      .join('\n')}\n`)
+    .join('\n');
+
+  const blob = new Blob([transcript], { type: 'text/plain' });
+  const url = URL.createObjectURL(blob);
+  const anchor = document.createElement('a');
+  anchor.href = url;
+  anchor.download = `${conversation.title.replace(/\s+/g, '-')}.txt`;
+  anchor.click();
+  URL.revokeObjectURL(url);
+}
+
+function handleClear() {
+  const conversation = state.conversations.find((c) => c.id === state.activeConversationId);
+  if (!conversation) return;
+  conversation.messages = [
+    {
+      role: 'assistant',
+      author: 'Nebula Navigator',
+      time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+      content: [
+        'Cleared the slate. Share your goal and I will prepare the right briefings or checklists.',
+      ],
+      cues: ['Workspace refreshed'],
+    },
+  ];
+  persistState();
+  hydrateUI();
+}
+
+function handleToggleTheme() {
+  state.theme = state.theme === 'dark' ? 'light' : 'dark';
+  persistState();
+  hydrateUI();
+}
+
+function handleToggleDensity() {
+  state.density = state.density === 'compact' ? 'standard' : 'compact';
+  persistState();
+  hydrateUI();
+}
+
+function autoResizeTextarea() {
+  dom.messageInput.style.height = 'auto';
+  dom.messageInput.style.height = `${dom.messageInput.scrollHeight}px`;
+}
+
+dom.messageInput.addEventListener('input', autoResizeTextarea);
+
+dom.composer.addEventListener('submit', handleSendMessage);
+
+dom.sessionSearch.addEventListener('input', handleSearch);
+
+dom.newSession.addEventListener('click', handleNewSession);
+
+dom.pinButton.addEventListener('click', handlePin);
+
+dom.exportButton.addEventListener('click', handleExport);
+
+dom.clearButton.addEventListener('click', handleClear);
+
+dom.toggleTheme.addEventListener('click', handleToggleTheme);
+
+dom.toggleCompact.addEventListener('click', handleToggleDensity);
+
+dom.buttons.openSettings.addEventListener('click', () => dom.dialogs.settings.showModal());
+dom.buttons.openPlaybooks.addEventListener('click', () => dom.dialogs.playbooks.showModal());
+dom.buttons.openKnowledge.addEventListener('click', () => dom.dialogs.knowledge.showModal());
+dom.buttons.openChangelog.addEventListener('click', () => dom.dialogs.changelog.showModal());
+
+['settings', 'playbooks', 'knowledge', 'changelog'].forEach((key) => {
+  dom.dialogs[key].addEventListener('cancel', (event) => event.preventDefault());
+});
+
+document.getElementById('settings-dark').addEventListener('change', handleToggleTheme);
+document.getElementById('settings-compact').addEventListener('change', handleToggleDensity);
+
+document.getElementById('refresh-overview').addEventListener('click', () => {
+  const now = new Date();
+  dom.footerSync.textContent = 'just refreshed';
+  state.events.unshift({
+    time: now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+    detail: 'Navigator refreshed metrics snapshot.',
+  });
+  if (state.events.length > 8) {
+    state.events.pop();
+  }
+  state.metrics.curatedSources += 1;
+  persistState();
+  hydrateUI();
+});
+
+document.getElementById('attach-note').addEventListener('click', () => {
+  const conversation = state.conversations.find((c) => c.id === state.activeConversationId);
+  if (!conversation) return;
+  const note = {
+    role: 'assistant',
+    author: 'Nebula Navigator',
+    time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+    content: [
+      'Attached your latest field note set. Flagging that it was updated 12 minutes ago and still awaiting verification.',
+    ],
+    cues: ['Attachment queued'],
+  };
+  conversation.messages.push(note);
+  renderMessages(conversation);
+  persistState();
+});
+
+document.getElementById('insert-snippet').addEventListener('click', () => {
+  const snippet = 'Checklist: confirm sources → summarize insights → log follow-ups.';
+  dom.messageInput.value = `${dom.messageInput.value} ${snippet}`.trim();
+  dom.messageInput.focus();
+  autoResizeTextarea();
+});
+
+document.getElementById('insert-emoji').addEventListener('click', () => {
+  dom.messageInput.value = `${dom.messageInput.value} 🙂`.trim();
+  dom.messageInput.focus();
+  autoResizeTextarea();
+});
+
+document.addEventListener('keydown', (event) => {
+  if (event.key === '/' && document.activeElement !== dom.sessionSearch) {
+    dom.sessionSearch.focus();
     event.preventDefault();
-    const formData = new FormData(form);
-    const assignment = {
-      id: `as-${Date.now()}`,
-      title: formData.get('title'),
-      subject: formData.get('subject'),
-      dueDate: formData.get('dueDate'),
-      description: formData.get('description'),
-      status: 'Active',
-    };
-    state.data.assignments.push(assignment);
-    persistData();
-    form.reset();
-    renderAssignments();
-    renderDashboard();
-    showSnackbar('Assignment added');
-  });
-}
+  }
+  if (event.key === 'Escape') {
+    Object.values(dom.dialogs).forEach((dialog) => dialog.open && dialog.close());
+  }
+});
 
-function setupCommunicationForm() {
-  const form = document.getElementById('communication-form');
-  form.addEventListener('submit', (event) => {
-    event.preventDefault();
-    const formData = new FormData(form);
-    const communication = {
-      id: `com-${Date.now()}`,
-      recipient: formData.get('recipient'),
-      channel: formData.get('channel'),
-      message: formData.get('message'),
-      date: new Date().toISOString(),
-    };
-    state.data.communications.push(communication);
-    persistData();
-    form.reset();
-    renderCommunications();
-    renderDashboard();
-    showSnackbar('Communication logged');
-  });
-}
+hydrateUI();
 
-function setupReportsSelect() {
-  const select = document.getElementById('reports-subject');
-  select.addEventListener('change', (event) => {
-    state.activeSubject = event.target.value;
-    renderSubjectMastery(state.activeSubject);
-  });
-}
+setInterval(() => {
+  const timestamp = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+  dom.footerSync.textContent = `updated ${timestamp}`;
+}, 30000);
 
-function setupQuickActions() {
-  document.querySelector('[data-action="jump-gradebook"]').addEventListener('click', () => {
-    document.querySelector('[data-target="gradebook"]').click();
-  });
-  document.querySelector('[data-action="new-message"]').addEventListener('click', () => {
-    document.querySelector('[data-target="communication"]').click();
-    document.querySelector('#communication-form [name="recipient"]').focus();
-  });
-  document.querySelector('[data-action="add-assignment"]').addEventListener('click', () => {
-    document.querySelector('[data-target="assignments"]').click();
-    document.querySelector('#assignment-form [name="title"]').focus();
-  });
-}
-
-function setupResetDemo() {
-  document.getElementById('reset-demo').addEventListener('click', () => {
-    localStorage.removeItem(storageKey);
-    state.data = structuredClone(defaultData);
-    renderAll();
-    showSnackbar('Demo data restored');
-  });
-}
-
-function renderAll() {
-  renderDashboard();
-  if (state.activeView === 'gradebook') renderGradebook();
-  if (state.activeView === 'students') renderStudentList();
-  if (state.activeView === 'assignments') renderAssignments();
-  if (state.activeView === 'communication') renderCommunications();
-  if (state.activeView === 'reports') renderInsights();
-}
-
-function init() {
-  renderDashboard();
-  setupNavigation();
-  setupGlobalSearch();
-  setupGradebookInteractions();
-  setupStudentFilters();
-  setupAssignmentForm();
-  setupCommunicationForm();
-  setupReportsSelect();
-  setupQuickActions();
-  setupResetDemo();
-  renderAssignments();
-  renderCommunications();
-}
-
-document.addEventListener('DOMContentLoaded', init);

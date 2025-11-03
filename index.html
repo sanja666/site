@@ -3,350 +3,254 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>NovaClass | Teacher Command Center</title>
+    <title>NebulaChat Studio</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;900&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&display=swap"
       rel="stylesheet"
     />
     <link rel="stylesheet" href="assets/css/style.css" />
   </head>
   <body>
-    <div class="app-shell">
-      <aside class="sidebar">
-        <div class="brand">
-          <div class="brand-icon">NC</div>
+    <div class="app" data-theme="dark">
+      <header class="topbar">
+        <div class="topbar__brand">
+          <div class="brand-mark">NC</div>
           <div>
-            <h1>NovaClass</h1>
-            <span>Teacher HQ</span>
+            <h1>NebulaChat Studio</h1>
+            <p>Human-guided conversational workspace</p>
           </div>
         </div>
-        <nav>
-          <button class="nav-item active" data-target="dashboard">
-            <span class="nav-icon">📊</span>
-            Dashboard
+        <div class="topbar__actions">
+          <div class="activity" id="activity-indicator">
+            <span class="pulse"></span>
+            <span>Workspace synced moments ago</span>
+          </div>
+          <button class="ghost" id="toggle-theme" aria-pressed="true">
+            <span class="icon">🌙</span>
+            <span>Dark mode</span>
           </button>
-          <button class="nav-item" data-target="gradebook">
-            <span class="nav-icon">📘</span>
-            Gradebook
+          <button class="ghost" id="toggle-compact">
+            <span class="icon">⇅</span>
+            <span>Density</span>
           </button>
-          <button class="nav-item" data-target="students">
-            <span class="nav-icon">🧑‍🎓</span>
-            Students
+          <button class="primary" id="open-settings">
+            <span class="icon">⚙️</span>
+            <span>Studio settings</span>
           </button>
-          <button class="nav-item" data-target="assignments">
-            <span class="nav-icon">🗂️</span>
-            Assignments
-          </button>
-          <button class="nav-item" data-target="communication">
-            <span class="nav-icon">💬</span>
-            Communication
-          </button>
-          <button class="nav-item" data-target="reports">
-            <span class="nav-icon">📈</span>
-            Insights
-          </button>
-        </nav>
-        <div class="sidebar-footer">
-          <button class="secondary" id="reset-demo">Reset Demo Data</button>
         </div>
-      </aside>
-      <main class="main">
-        <header class="top-bar">
-          <div class="search">
-            <input type="search" id="global-search" placeholder="Quick search students, assignments, or families" />
-          </div>
-          <div class="profile">
-            <div class="profile-info">
-              <span class="teacher-name">Ms. Ilze Kārkliņa</span>
-              <small>Mathematics &amp; Homeroom 7A</small>
+      </header>
+
+      <main class="workspace">
+        <aside class="sidebar">
+          <div class="sidebar__section">
+            <div class="section-header">
+              <h2>Sessions</h2>
+              <button class="ghost" id="new-session">
+                <span class="icon">＋</span>
+                <span>New chat</span>
+              </button>
             </div>
-            <div class="profile-avatar">IK</div>
-          </div>
-        </header>
-
-        <section class="view" id="dashboard" data-view>
-          <div class="page-header">
-            <h2>Teaching Radar</h2>
-            <p>All of today’s priorities, at a glance.</p>
-          </div>
-          <div class="grid dashboard-grid">
-            <article class="card metric" id="metric-attendance">
-              <div class="metric-label">Average attendance</div>
-              <div class="metric-value">
-                <span class="value">--</span>
-                <span class="unit">%</span>
-              </div>
-              <div class="metric-trend positive">+2.4% vs last month</div>
-            </article>
-            <article class="card metric" id="metric-performance">
-              <div class="metric-label">Class performance</div>
-              <div class="metric-value">
-                <span class="value">--</span>
-                <span class="unit">avg</span>
-              </div>
-              <div class="metric-trend neutral">Steady trend</div>
-            </article>
-            <article class="card metric" id="metric-completion">
-              <div class="metric-label">Assignments completed</div>
-              <div class="metric-value">
-                <span class="value">--</span>
-                <span class="unit">%</span>
-              </div>
-              <div class="metric-trend positive">+4 on-time submissions</div>
-            </article>
-            <article class="card quick-actions">
-              <h3>Quick actions</h3>
-              <div class="chips">
-                <button data-action="jump-gradebook">Record mark</button>
-                <button data-action="new-message">Message family</button>
-                <button data-action="add-assignment">New assignment</button>
-              </div>
-              <p class="hint">Your most common workflows in one tap.</p>
-            </article>
+            <div class="search">
+              <span class="icon">🔍</span>
+              <input type="search" id="session-search" placeholder="Search conversations" />
+            </div>
+            <div class="conversation-list" id="conversation-list"></div>
           </div>
 
-          <div class="grid dashboard-detail">
-            <article class="card" id="upcoming-assessments">
-              <div class="section-header">
-                <h3>Upcoming assessments</h3>
-                <span class="tag">Next 2 weeks</span>
-              </div>
-              <ul class="list" id="assessment-list"></ul>
-            </article>
-            <article class="card" id="family-updates">
-              <div class="section-header">
-                <h3>Family communications</h3>
-                <span class="tag accent">Follow-ups</span>
-              </div>
-              <ul class="timeline" id="communication-timeline"></ul>
-            </article>
-            <article class="card" id="today-agenda">
-              <div class="section-header">
-                <h3>Today’s agenda</h3>
-                <span class="tag">Thursday</span>
-              </div>
-              <ul class="agenda" id="agenda-list"></ul>
-            </article>
+          <div class="sidebar__section">
+            <div class="section-header">
+              <h3>Playbooks</h3>
+              <button class="ghost" id="open-playbooks">View all</button>
+            </div>
+            <div class="playbook-grid" id="playbook-grid"></div>
           </div>
-        </section>
+        </aside>
 
-        <section class="view hidden" id="gradebook" data-view>
-          <div class="page-header">
-            <h2>Gradebook</h2>
-            <p>Lightning-fast grading with automatic averages.</p>
-          </div>
-          <div class="gradebook-toolbar">
-            <label>
-              Subject
-              <select id="subject-select"></select>
-            </label>
-            <label>
-              Term
-              <select id="term-select">
-                <option value="term1">Autumn</option>
-                <option value="term2">Winter</option>
-                <option value="term3">Spring</option>
-              </select>
-            </label>
-            <div class="gradebook-actions">
-              <button id="export-gradebook" class="secondary">Export snapshot</button>
+        <section class="chat" aria-live="polite">
+          <div class="chat__header">
+            <div>
+              <div class="chat__subtitle">Active assistant</div>
+              <h2 id="chat-title">Nebula Navigator</h2>
+            </div>
+            <div class="chat__meta">
+              <button class="ghost" id="pin-session" aria-pressed="false">📌 Pin</button>
+              <button class="ghost" id="export-session">⬇️ Export</button>
+              <button class="ghost" id="clear-session">🧹 Reset</button>
             </div>
           </div>
-          <div class="table-wrapper">
-            <table class="grade-table">
-              <thead>
-                <tr>
-                  <th>Student</th>
-                  <th class="align-center">Marks</th>
-                  <th class="align-center">Average</th>
-                  <th class="align-center">Latest</th>
-                </tr>
-              </thead>
-              <tbody id="gradebook-body"></tbody>
-            </table>
-          </div>
-          <p class="table-hint">Tip: Click a mark to update it instantly. Changes are saved locally.</p>
+          <div class="chat__timeline" id="session-timeline"></div>
+          <div class="chat__messages" id="message-stream"></div>
+          <div class="chat__suggestions" id="prompt-suggestions"></div>
+          <form class="composer" id="composer" autocomplete="off">
+            <label for="message-input" class="visually-hidden">Message Nebula Navigator</label>
+            <textarea
+              id="message-input"
+              placeholder="Guide the Navigator..."
+              rows="1"
+              required
+            ></textarea>
+            <div class="composer__actions">
+              <div class="composer__addons">
+                <button type="button" class="ghost" id="attach-note" title="Attach reference">📎</button>
+                <button type="button" class="ghost" id="insert-snippet" title="Insert snippet">📄</button>
+                <button type="button" class="ghost" id="insert-emoji" title="Emoji palette">😊</button>
+              </div>
+              <button type="submit" class="primary" id="send-message">
+                <span>Send</span>
+                <span class="icon">⮞</span>
+              </button>
+            </div>
+          </form>
         </section>
 
-        <section class="view hidden" id="students" data-view>
-          <div class="page-header">
-            <h2>Students &amp; families</h2>
-            <p>Context-rich profiles to support every learner.</p>
-          </div>
-          <div class="students-layout">
-            <aside class="students-list">
-              <div class="list-toolbar">
-                <input type="search" id="student-search" placeholder="Find student" />
-                <div class="filters">
-                  <button class="secondary" data-filter="all">All</button>
-                  <button class="secondary" data-filter="support">Needs support</button>
-                  <button class="secondary" data-filter="celebrate">Celebrate</button>
-                </div>
-              </div>
-              <ul id="student-list"></ul>
-            </aside>
-            <article class="student-profile" id="student-profile">
-              <div class="empty-state">
-                <h3>Select a student to load their profile</h3>
-                <p>Attendance, family contacts, strengths, and nudges appear here.</p>
-              </div>
-            </article>
-          </div>
-        </section>
+        <aside class="details">
+          <section class="panel" id="assistant-profile">
+            <div class="panel__header">
+              <h3>Nebula Navigator</h3>
+              <span class="status status--online">online</span>
+            </div>
+            <p>
+              Your conversational copilot for research curation and knowledge organization. Navigator
+              draws on curated playbooks and guided workflows—not generative AI—to respond with
+              verified, human-authored insights.
+            </p>
+            <ul class="traits" id="assistant-traits"></ul>
+            <div class="capabilities">
+              <h4>Focus modes</h4>
+              <div class="tag-grid" id="focus-modes"></div>
+            </div>
+          </section>
 
-        <section class="view hidden" id="assignments" data-view>
-          <div class="page-header">
-            <h2>Assignments</h2>
-            <p>Plan, schedule, and celebrate student work.</p>
-          </div>
-          <div class="assignments-grid">
-            <article class="card">
-              <h3>Create assignment</h3>
-              <form id="assignment-form" class="stack">
-                <label>
-                  Title
-                  <input type="text" name="title" required />
-                </label>
-                <label>
-                  Subject
-                  <input type="text" name="subject" required />
-                </label>
-                <label>
-                  Due date
-                  <input type="date" name="dueDate" required />
-                </label>
-                <label>
-                  Description
-                  <textarea name="description" rows="3" placeholder="Add guidance for students"></textarea>
-                </label>
-                <button type="submit">Add assignment</button>
-              </form>
-            </article>
-            <article class="card">
-              <div class="section-header">
-                <h3>Active assignments</h3>
-                <span class="tag" id="assignment-count">0</span>
-              </div>
-              <ul class="list" id="assignment-list"></ul>
-            </article>
-          </div>
-        </section>
+          <section class="panel" id="session-overview">
+            <div class="panel__header">
+              <h3>Session overview</h3>
+              <button class="ghost" id="refresh-overview">↻ Refresh</button>
+            </div>
+            <dl class="metrics" id="session-metrics"></dl>
+            <div class="timeline" id="session-events"></div>
+          </section>
 
-        <section class="view hidden" id="communication" data-view>
-          <div class="page-header">
-            <h2>Communication log</h2>
-            <p>Document and follow-up on every family touch point.</p>
-          </div>
-          <div class="communication-layout">
-            <article class="card">
-              <h3>Recent conversations</h3>
-              <ul class="timeline" id="communication-list"></ul>
-            </article>
-            <article class="card">
-              <h3>Log new touch point</h3>
-              <form id="communication-form" class="stack">
-                <label>
-                  Recipient
-                  <input type="text" name="recipient" placeholder="Family name" required />
-                </label>
-                <label>
-                  Channel
-                  <select name="channel">
-                    <option>Email</option>
-                    <option>Phone call</option>
-                    <option>SMS</option>
-                    <option>Meeting</option>
-                  </select>
-                </label>
-                <label>
-                  Summary
-                  <textarea name="message" rows="3" placeholder="What was discussed?" required></textarea>
-                </label>
-                <button type="submit">Save log</button>
-              </form>
-            </article>
-          </div>
-        </section>
-
-        <section class="view hidden" id="reports" data-view>
-          <div class="page-header">
-            <h2>Insights &amp; reporting</h2>
-            <p>Evidence-backed insights for conferences and planning.</p>
-          </div>
-          <div class="insights-grid">
-            <article class="card">
-              <div class="section-header">
-                <h3>Subject mastery</h3>
-                <select id="reports-subject"></select>
-              </div>
-              <ul class="bar-chart" id="subject-masteries"></ul>
-            </article>
-            <article class="card">
-              <div class="section-header">
-                <h3>Attendance spotlight</h3>
-                <span class="tag accent">Term to date</span>
-              </div>
-              <ul class="list" id="attendance-spotlight"></ul>
-            </article>
-            <article class="card">
-              <div class="section-header">
-                <h3>Celebrations &amp; support</h3>
-                <span class="tag">Personalised</span>
-              </div>
-              <ul class="list" id="celebrations"></ul>
-            </article>
-          </div>
-        </section>
+          <section class="panel" id="knowledge-panel">
+            <div class="panel__header">
+              <h3>Knowledge vault</h3>
+              <button class="ghost" id="open-knowledge">Browse</button>
+            </div>
+            <div class="knowledge-list" id="knowledge-list"></div>
+          </section>
+        </aside>
       </main>
+
+      <footer class="footer">
+        <div>
+          <strong>NebulaChat Studio</strong> — human-authored assistants for complex workflows
+        </div>
+        <div class="footer__meta">
+          <span>Workspace build 2.7.18</span>
+          <span>•</span>
+          <span>Last synced <time id="footer-sync">just now</time></span>
+          <button class="ghost" id="open-changelog">Changelog</button>
+        </div>
+      </footer>
     </div>
-    <div class="snackbar" id="snackbar" role="status" aria-live="polite"></div>
 
-    <template id="assignment-item-template">
-      <li class="assignment-item">
-        <div>
-          <h4 data-field="title"></h4>
-          <div class="meta">
-            <span data-field="subject"></span>
-            <span data-field="due"></span>
-          </div>
-          <p data-field="description"></p>
+    <dialog id="settings-dialog" aria-label="Workspace settings">
+      <form method="dialog" class="settings">
+        <header class="settings__header">
+          <h2>Studio settings</h2>
+          <button class="ghost" value="cancel">Close</button>
+        </header>
+        <div class="settings__group">
+          <h3>Theme</h3>
+          <label class="toggle">
+            <input type="checkbox" id="settings-dark" checked />
+            <span class="slider"></span>
+            <span class="toggle__label">Enable dark theme</span>
+          </label>
+          <label class="toggle">
+            <input type="checkbox" id="settings-compact" />
+            <span class="slider"></span>
+            <span class="toggle__label">Compact density</span>
+          </label>
         </div>
-        <div class="actions">
-          <button data-action="complete">Mark complete</button>
-          <button data-action="remove" class="ghost">Remove</button>
+        <div class="settings__group">
+          <h3>Notifications</h3>
+          <label class="toggle">
+            <input type="checkbox" id="notify-highlights" checked />
+            <span class="slider"></span>
+            <span class="toggle__label">Digest when Navigator summarizes a topic</span>
+          </label>
+          <label class="toggle">
+            <input type="checkbox" id="notify-reminders" />
+            <span class="slider"></span>
+            <span class="toggle__label">Remind me about dormant threads</span>
+          </label>
         </div>
-      </li>
-    </template>
-
-    <template id="communication-item-template">
-      <li>
-        <div class="timeline-point"></div>
-        <div>
-          <h4 data-field="recipient"></h4>
-          <div class="meta">
-            <span data-field="channel"></span>
-            <span data-field="date"></span>
-          </div>
-          <p data-field="message"></p>
+        <div class="settings__group">
+          <h3>Exports</h3>
+          <p class="settings__description">
+            Choose how NebulaChat prepares conversation exports for your records.
+          </p>
+          <label class="radio">
+            <input type="radio" name="export" value="markdown" checked />
+            <span>Concise Markdown brief</span>
+          </label>
+          <label class="radio">
+            <input type="radio" name="export" value="timeline" />
+            <span>Chronological timeline</span>
+          </label>
+          <label class="radio">
+            <input type="radio" name="export" value="transcript" />
+            <span>Full transcript with annotations</span>
+          </label>
         </div>
-      </li>
-    </template>
+        <footer class="settings__footer">
+          <button class="ghost" value="cancel">Cancel</button>
+          <button class="primary" value="default">Save changes</button>
+        </footer>
+      </form>
+    </dialog>
 
-    <template id="student-list-item-template">
-      <li>
-        <button class="student-pill">
-          <div class="avatar" data-field="initials"></div>
-          <div class="details">
-            <span class="name" data-field="name"></span>
-            <span class="meta" data-field="meta"></span>
-          </div>
-          <div class="badges" data-field="badges"></div>
-        </button>
-      </li>
-    </template>
+    <dialog id="playbooks-dialog" aria-label="Playbook library">
+      <form method="dialog" class="dialog">
+        <header class="dialog__header">
+          <h2>Playbook library</h2>
+          <button class="ghost" value="cancel">Close</button>
+        </header>
+        <div class="dialog__content" id="playbook-library"></div>
+        <footer class="dialog__footer">
+          <button class="primary" value="default">Done</button>
+        </footer>
+      </form>
+    </dialog>
 
-    <script src="assets/js/app.js"></script>
+    <dialog id="knowledge-dialog" aria-label="Knowledge vault">
+      <form method="dialog" class="dialog">
+        <header class="dialog__header">
+          <h2>Knowledge vault</h2>
+          <button class="ghost" value="cancel">Close</button>
+        </header>
+        <div class="dialog__content" id="knowledge-library"></div>
+        <footer class="dialog__footer">
+          <button class="primary" value="default">Done</button>
+        </footer>
+      </form>
+    </dialog>
+
+    <dialog id="changelog-dialog" aria-label="Changelog">
+      <form method="dialog" class="dialog">
+        <header class="dialog__header">
+          <h2>Workspace changelog</h2>
+          <button class="ghost" value="cancel">Close</button>
+        </header>
+        <div class="dialog__content" id="changelog-content"></div>
+        <footer class="dialog__footer">
+          <button class="primary" value="default">Done</button>
+        </footer>
+      </form>
+    </dialog>
+
+    <script src="assets/js/app.js" type="module"></script>
   </body>
 </html>
