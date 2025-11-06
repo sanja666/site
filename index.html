@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Razvodloxov.com — Последний шанс всё потерять</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="floating-notification" id="floatingNotification">
+        <p>⚠️ <span id="notificationText">Подключите тариф «Комета 5 Мбит/с» и получите шанс на минусовой кэшбек!</span></p>
+        <button id="closeNotification" aria-label="Закрыть уведомление">×</button>
+    </div>
+    <header class="hero" id="top">
+        <nav class="main-nav">
+            <a class="logo" href="#top">Razvodloxov<span>.com</span></a>
+            <button class="nav-toggle" id="navToggle" aria-label="Открыть меню">☰</button>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="#tariffs">Интернет</a></li>
+                <li><a href="#tv">Телевидение</a></li>
+                <li><a href="#roulette">Рулетка</a></li>
+                <li><a href="#store">Магазин</a></li>
+                <li><a href="#wallet">Кошелёк</a></li>
+            </ul>
+        </nav>
+        <div class="hero-content">
+            <h1>Добро пожаловать в Razvodloxov.com</h1>
+            <p>Мы — провайдер мечты, если ваша мечта — переплатить за мигающий индикатор и ждать интернет как комету Галлея.</p>
+            <a class="cta" href="#tariffs">Впрыгнуть в приключение</a>
+        </div>
+        <div class="hero-meter">
+            <div class="meter-label">Уровень разочарования клиентов</div>
+            <div class="meter-bar"><span class="meter-fill"></span></div>
+        </div>
+    </header>
+
+    <main>
+        <section class="section" id="tariffs">
+            <h2>Тарифы «Вроде интернет»</h2>
+            <p class="section-intro">Мы гордо продаём пакеты, на которые невозможно пожаловаться — вы просто не дождётесь ответа поддержки.</p>
+            <div class="card-grid">
+                <article class="card">
+                    <h3>«Комета 5 Мбит/с»</h3>
+                    <p class="price">4 999 ₽/мес</p>
+                    <ul>
+                        <li>Скорость <strong>до</strong> 5 Мбит/с при попутном ветре</li>
+                        <li>Пинг как у межгалактической связи</li>
+                        <li>Техподдержка отвечает в следующем созвездии</li>
+                    </ul>
+                    <div class="card-review">«Ждал подключения 3 месяца. Интернет так и не пришёл, зато пришёл счёт». — Грустный клиент</div>
+                    <button class="ghost-btn">Оформить и раскаяться</button>
+                </article>
+                <article class="card">
+                    <h3>«Квантовый обрыв»</h3>
+                    <p class="price">9 999 ₽/мес</p>
+                    <ul>
+                        <li>Обрыв связи одновременно во всех параллельных вселенных</li>
+                        <li>Роутер «почти как в NASA» с 2 антеннами из фольги</li>
+                        <li>Секретная скорость — увидите в кошмарах</li>
+                    </ul>
+                    <div class="card-review">«Только подключился — уже отключили за профилактику». — Счастливый пользователь</div>
+                    <button class="ghost-btn">Поймать квантовый шанс</button>
+                </article>
+                <article class="card">
+                    <h3>«Джекпот без данных»</h3>
+                    <p class="price">14 999 ₽/мес</p>
+                    <ul>
+                        <li>Безлимитный трафик, если не пользоваться</li>
+                        <li>Премиум-поддержка: автоматический автоответчик</li>
+                        <li>Бонус: бумажный сертификат на разочарование</li>
+                    </ul>
+                    <div class="card-review">«В описании было написано 'последний шанс'. Так и вышло». — Инвестор</div>
+                    <button class="ghost-btn">Сорвать пустой куш</button>
+                </article>
+            </div>
+        </section>
+
+        <section class="section alt" id="tv">
+            <h2>Телевидение на грани фантастики</h2>
+            <p class="section-intro">Наш IPTV превращает любой телевизор в музей зависаний. Подключайте пакеты, чтобы узнать, какие каналы будут «временно недоступны».</p>
+            <div class="tv-grid">
+                <article class="tv-card">
+                    <h3>«Пиксельное чудо» — 2 999 ₽/мес</h3>
+                    <p>40 каналов, из которых 12 — рекламный повтор, остальные 28 — вечная загрузка.</p>
+                    <ul>
+                        <li>Каналы: «Глючный спорт», «Сломанный сериал», «Новости вчера»</li>
+                        <li>Отзывы: 1★ — «Картинка как в Minecraft, но без шарма»</li>
+                    </ul>
+                </article>
+                <article class="tv-card">
+                    <h3>«Туман Альбиона» — 5 499 ₽/мес</h3>
+                    <p>80 каналов в HD*, где * означает «HD, если смотреть из другой галактики».</p>
+                    <ul>
+                        <li>Каналы: «Случайный шум», «Канал теста сигнала», «Лотерея каналов»</li>
+                        <li>Отзывы: 1.5★ — «Переключаю ради белого шума, он стабильнее»</li>
+                    </ul>
+                </article>
+                <article class="tv-card">
+                    <h3>«Последний эфир» — 9 999 ₽/мес</h3>
+                    <p>120 каналов. К декабрю будет доступен ровно один — наш рекламный.</p>
+                    <ul>
+                        <li>Каналы: «Вечный эфир», «Реклама тарифов», «Архив жалоб»</li>
+                        <li>Отзывы: 0.5★ — «Оплатил, получил счёт за отключение»</li>
+                    </ul>
+                </article>
+            </div>
+        </section>
+
+        <section class="section" id="roulette">
+            <h2>Рулетка «Невезучий бонус»</h2>
+            <p class="section-intro">Крути рулетку, чтобы проиграть невероятные «выгоды» и заодно всё, что ещё не потерял.</p>
+            <div class="roulette-container">
+                <div class="roulette-track" id="rouletteTrack">
+                    <div class="roulette-strip" id="rouletteStrip"></div>
+                </div>
+                <div class="roulette-pointer">
+                    <span>▼</span>
+                </div>
+            </div>
+            <button class="cta" id="spinButton">Запустить обман</button>
+            <div class="roulette-result" id="rouletteResult">Нажмите, чтобы испытать судьбу… и терпение.</div>
+        </section>
+
+        <section class="section alt" id="store">
+            <h2>Интернет-магазин «Траты ради разочарования»</h2>
+            <p class="section-intro">У нас всё «со скидкой», но только если читать мелкий шрифт вверх ногами и на латыни.</p>
+            <div class="store-grid">
+                <article class="store-card">
+                    <div class="store-image store-image-router" role="img" aria-label="Фото роутера"></div>
+                    <div class="store-content">
+                        <h3>Супер-роутер «SpaceShredder»</h3>
+                        <p class="price">«Со скидкой» 19 990 ₽</p>
+                        <ul>
+                            <li>До 5 Мбит/с в теории и 0.5 Мбит/с на практике</li>
+                            <li>Wi-Fi 2.4 Гц — почти как музыка</li>
+                            <li>Поддержка: перезагрузите, пожалуйста, ещё раз</li>
+                        </ul>
+                        <div class="reviews">
+                            <strong>Отзывы:</strong>
+                            <p>«Сгорел от взгляда. Зато огонёк красивый» — 1★</p>
+                            <p>«Получил скидку -10%, но доплатил +200% за доставку» — 0★</p>
+                        </div>
+                        <button class="ghost-btn">Купить и пожалеть</button>
+                    </div>
+                </article>
+                <article class="store-card">
+                    <div class="store-image store-image-tvbox" role="img" aria-label="Фото приставки"></div>
+                    <div class="store-content">
+                        <h3>ТВ-приставка «LagBox Pro»</h3>
+                        <p class="price">«Акция дня» 14 490 ₽</p>
+                        <ul>
+                            <li>Кэшбэк в виде задолженности</li>
+                            <li>Видео 4K при скорости мысли</li>
+                            <li>Микрофризы каждые 5 секунд — особенность, а не баг</li>
+                        </ul>
+                        <div class="reviews">
+                            <strong>Отзывы:</strong>
+                            <p>«Лагает даже в выключенном состоянии» — 0.5★</p>
+                            <p>«Дизайн красивый, но это же коробка от обуви» — 1★</p>
+                        </div>
+                        <button class="ghost-btn">Добавить в пустую корзину</button>
+                    </div>
+                </article>
+                <article class="store-card">
+                    <div class="store-image store-image-cable" role="img" aria-label="Фото кабеля"></div>
+                    <div class="store-content">
+                        <h3>Кабель «Unstable Flex»</h3>
+                        <p class="price">«Всего» 4 490 ₽</p>
+                        <ul>
+                            <li>Ломается при взгляде, зато блестит</li>
+                            <li>Длина 30 см — зато модно короткий</li>
+                            <li>Совместим с разочарованием любого формата</li>
+                        </ul>
+                        <div class="reviews">
+                            <strong>Отзывы:</strong>
+                            <p>«Сломался, пока открывал упаковку» — 0★</p>
+                            <p>«Цена кусается, а кабель — нет» — 1★</p>
+                        </div>
+                        <button class="ghost-btn">Оформить без доставки</button>
+                    </div>
+                </article>
+            </div>
+        </section>
+
+        <section class="section" id="wallet">
+            <h2>Кошелёк Razvodloxov Pay</h2>
+            <p class="section-intro">Пополнять легко, выводить — сложно, дорого и почти невозможно. Как мы и любим.</p>
+            <div class="wallet-grid">
+                <div class="wallet-card">
+                    <h3>Пополнить счёт</h3>
+                    <form class="wallet-form" id="topupForm">
+                        <label>Сумма пополнения
+                            <input type="number" name="amount" placeholder="Например, 19999" required>
+                        </label>
+                        <label>Способ оплаты
+                            <select name="method" required>
+                                <option value="card">Кредитная карта</option>
+                                <option value="paypal">PayPal</option>
+                                <option value="crypto">Криптомонета «Разводик»</option>
+                                <option value="installment">Расрочка под 300% годовых</option>
+                            </select>
+                        </label>
+                        <div class="topup-details" data-method="card">
+                            <label>Номер карты
+                                <input type="text" name="cardNumber" placeholder="0000 0000 0000 0000" required>
+                            </label>
+                            <label>Срок действия
+                                <input type="text" name="expiry" placeholder="MM/YY" required>
+                            </label>
+                            <label>CVC
+                                <input type="text" name="cvc" placeholder="123" required>
+                            </label>
+                        </div>
+                        <div class="topup-details hidden" data-method="paypal">
+                            <label>Логин PayPal
+                                <input type="email" name="paypalEmail" placeholder="example@paypal.com">
+                            </label>
+                        </div>
+                        <div class="topup-details hidden" data-method="crypto">
+                            <label>ID кошелька
+                                <input type="text" name="wallet" placeholder="RZVD-0000-FAKE">
+                            </label>
+                        </div>
+                        <div class="topup-details hidden" data-method="installment">
+                            <label>Паспортные данные
+                                <input type="text" name="passport" placeholder="Серия номер">
+                            </label>
+                            <label>Кредитная история
+                                <textarea name="history" rows="2" placeholder="Расскажите, почему доверяете нам"></textarea>
+                            </label>
+                        </div>
+                        <button type="submit" class="cta">Пополнить мгновенно</button>
+                        <div class="form-status" id="topupStatus" aria-live="polite"></div>
+                    </form>
+                </div>
+                <div class="wallet-card">
+                    <h3>Вывести средства</h3>
+                    <form class="wallet-form" id="withdrawForm">
+                        <label>Сумма вывода
+                            <input type="number" name="amount" placeholder="Введите сумму" required>
+                        </label>
+                        <label>Комиссия (минимум 45%)</label>
+                        <div class="commission">Наша комиссия рассчитывается случайно, но всегда больно.</div>
+                        <label>Подтверждение личности
+                            <input type="text" name="id" placeholder="Введи номер документа, 18 сканов и 4 справки" required>
+                        </label>
+                        <label>Капча</label>
+                        <div class="captcha" id="captchaArea">
+                            <span id="captchaText"></span>
+                            <input type="text" name="captcha" placeholder="Введите шифр" required>
+                            <button type="button" id="refreshCaptcha" aria-label="Обновить капчу">↻</button>
+                        </div>
+                        <button type="submit" class="ghost-btn">Попробовать вывести</button>
+                        <div class="form-status" id="withdrawStatus" aria-live="polite"></div>
+                    </form>
+                </div>
+            </div>
+        </section>
+
+        <section class="section alt" id="faq">
+            <h2>Часто задаваемые вопросы (и наши ответы-отмазки)</h2>
+            <div class="faq-grid">
+                <article class="faq-item">
+                    <h3>Интернет не работает. Что делать?</h3>
+                    <p>Подождите до конца века или перезагрузите роутер. Если не поможет — начните всё сначала.</p>
+                </article>
+                <article class="faq-item">
+                    <h3>Когда обработаете мою заявку на вывод?</h3>
+                    <p>Сразу после проверки всех 17 подтверждений, включая тест на знание таблицы Менделеева.</p>
+                </article>
+                <article class="faq-item">
+                    <h3>Почему у вас такие цены?</h3>
+                    <p>Потому что мы верим в чудеса рынка. Вы платите — мы удивляемся.</p>
+                </article>
+                <article class="faq-item">
+                    <h3>Есть ли техподдержка?</h3>
+                    <p>Конечно! Оставьте заявку, и робот-автоответчик перезвонит когда-нибудь.</p>
+                </article>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="footer-links">
+            <a href="#tariffs">Интернет</a>
+            <a href="#tv">Телевидение</a>
+            <a href="#roulette">Рулетка</a>
+            <a href="#store">Магазин</a>
+            <a href="#wallet">Кошелёк</a>
+        </div>
+        <p>© 2024 Razvodloxov.com. Все права извините.</p>
+    </footer>
+
+    <div class="modal" id="loadingModal" role="dialog" aria-modal="true" aria-labelledby="loadingTitle">
+        <div class="modal-content">
+            <h2 id="loadingTitle">Обрабатываем ваш запрос…</h2>
+            <p>Секундочку, проверяем вашу платёжеспособность на Марсе.</p>
+            <div class="loader"></div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
