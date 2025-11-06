@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bita – Просто Удар по Кошельку</title>
+    <style>
+        :root {
+            --lime: #9bff00;
+            --violet: #5a00b4;
+            --red: #ff0033;
+            --gray: #1e1e1e;
+            --off-white: #f5f5f5;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: "Times New Roman", serif;
+            background: linear-gradient(135deg, var(--lime) 0%, var(--violet) 50%, var(--red) 100%);
+            color: var(--off-white);
+            text-shadow: 0 0 10px rgba(0,0,0,0.4);
+        }
+
+        header {
+            background: rgba(0, 0, 0, 0.7);
+            padding: 4rem 1rem 3rem;
+            text-align: center;
+            border-bottom: 8px solid var(--lime);
+        }
+
+        header h1 {
+            font-family: "Comic Sans MS", "Comic Sans", cursive;
+            font-size: clamp(2.8rem, 6vw, 4.5rem);
+            letter-spacing: 0.25rem;
+            margin: 0;
+        }
+
+        header p {
+            font-size: clamp(1.1rem, 3vw, 2rem);
+            text-transform: uppercase;
+            letter-spacing: 0.4rem;
+            margin: 1rem 0 0;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 2rem 1.5rem 6rem;
+            display: grid;
+            gap: 3rem;
+        }
+
+        section {
+            background: rgba(0, 0, 0, 0.6);
+            border: 6px double var(--red);
+            padding: 2rem;
+            box-shadow: 0 1.25rem 2rem rgba(0,0,0,0.6);
+            position: relative;
+        }
+
+        section::before {
+            content: "";
+            position: absolute;
+            inset: 1rem;
+            border: 4px dashed var(--lime);
+            pointer-events: none;
+            opacity: 0.35;
+        }
+
+        h2 {
+            font-family: "Comic Sans MS", "Comic Sans", cursive;
+            font-size: clamp(1.8rem, 4vw, 3rem);
+            margin: 0 0 1.5rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        h2 span.icon {
+            display: inline-flex;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: var(--lime);
+            color: var(--violet);
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            box-shadow: 0 0 12px rgba(255,255,255,0.5);
+            border: 4px solid var(--red);
+            transform: rotate(-7deg);
+        }
+
+        .section-content {
+            display: grid;
+            gap: 1.5rem;
+        }
+
+        .hero-image,
+        .section-image {
+            width: 100%;
+            border: 6px solid var(--violet);
+            filter: saturate(200%) contrast(140%);
+            margin: 1.5rem 0 0;
+            max-height: 320px;
+            object-fit: cover;
+        }
+
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .card {
+            background: rgba(20, 20, 20, 0.85);
+            padding: 1.5rem;
+            border: 4px solid var(--violet);
+            box-shadow: inset 0 0 20px rgba(255,0,51,0.5);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card::after {
+            content: "Bita";
+            position: absolute;
+            bottom: -20px;
+            right: -10px;
+            font-family: "Comic Sans MS", "Comic Sans", cursive;
+            font-size: 3rem;
+            color: rgba(255,255,255,0.1);
+            transform: rotate(-15deg);
+        }
+
+        .card h3 {
+            font-family: "Comic Sans MS", "Comic Sans", cursive;
+            font-size: 1.6rem;
+            margin: 0 0 0.75rem;
+            color: var(--lime);
+        }
+
+        .card p {
+            margin: 0.75rem 0;
+            font-size: 1rem;
+            line-height: 1.6;
+        }
+
+        .product-list {
+            list-style: square inside;
+            padding: 0;
+            margin: 0;
+        }
+
+        .product-list li {
+            margin: 0.75rem 0;
+        }
+
+        .extra-services {
+            display: grid;
+            gap: 1.25rem;
+        }
+
+        .extra-item {
+            display: flex;
+            gap: 1rem;
+            align-items: flex-start;
+            background: rgba(255, 0, 51, 0.2);
+            border: 3px dotted var(--lime);
+            padding: 1rem;
+        }
+
+        .extra-item img {
+            width: 80px;
+            height: 80px;
+            object-fit: cover;
+            border: 4px solid var(--violet);
+            filter: contrast(180%) saturate(210%);
+        }
+
+        footer {
+            background: rgba(0, 0, 0, 0.85);
+            color: #d0d0d0;
+            font-size: 0.65rem;
+            padding: 2rem 1rem 3rem;
+            text-align: center;
+            line-height: 1.5;
+            border-top: 8px solid var(--red);
+            font-family: "Times New Roman", serif;
+        }
+
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 1rem;
+        }
+
+        .gallery img {
+            width: 100%;
+            border: 5px ridge var(--red);
+            background: rgba(255,255,255,0.1);
+            padding: 0.5rem;
+            filter: saturate(250%) contrast(160%);
+            box-shadow: 0 0 10px rgba(0,0,0,0.7);
+        }
+
+        @media (max-width: 600px) {
+            section {
+                padding: 1.5rem 1rem;
+            }
+
+            .card {
+                padding: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Bita – Просто Удар по Кошельку</h1>
+        <p>Интернет, который ты не просил</p>
+        <img class="hero-image" src="https://images.unsplash.com/photo-1517430816045-df4b7de11d1d?auto=format&fit=crop&w=1600&q=80" alt="Размытая клавиатура и 3D-модель Wi-Fi с подписью SPEED???">
+    </header>
+
+    <main class="container">
+        <section id="why-internet">
+            <h2><span class="icon">?</span>Интернет? А зачем?</h2>
+            <div class="section-content">
+                <p>В Bita мы искренне удивлены, что вы вообще ищете интернет. Нам кажется, что в голубиной почте больше перспектив. Но раз уж вы зашли — вот список причин, по которым стоит закрыть вкладку прямо сейчас.</p>
+                <ul class="product-list">
+                    <li>Наш Wi-Fi обижает соседей и завидует вашему старому диалапу.</li>
+                    <li>Маршрутизатор думает, что вы — рассылка спама, и так к вам и относится.</li>
+                    <li>Пользовательское соглашение длиннее, чем ваши планы на жизнь.</li>
+                </ul>
+                <img class="section-image" src="https://images.unsplash.com/photo-1526378722484-bd91ca387e72?auto=format&fit=crop&w=1200&q=80" alt="Грустный Wi-Fi роутер с глазами">
+            </div>
+        </section>
+
+        <section id="tariffs">
+            <h2><span class="icon">⚡</span>Тарифы от Bita</h2>
+            <div class="cards">
+                <article class="card">
+                    <h3>«БЫСТРО»</h3>
+                    <p>До 5 Мбит/с, если Луна в правильной фазе и вы обещаете не загружать файлы больше 3 мегабайт.</p>
+                    <p>Бонус: консультация с нашим астрологом-консультантом.</p>
+                </article>
+                <article class="card">
+                    <h3>«БЫСТРО+НЕОЖИДАННО»</h3>
+                    <p>До 10 Мбит/с, но только ночью. Мы сами не знаем почему, возможно, роутер стесняется.</p>
+                    <p>В комплекте: фонарик, чтобы не споткнуться, пока проверяете скорость.</p>
+                </article>
+                <article class="card">
+                    <h3>«VIP-КАБЕЛЬ»</h3>
+                    <p>До 15 Мбит/с. Доставляем кабель на плечах нашего сотрудника. Комиссия €99.99 за улыбку.</p>
+                    <p>Опция: дополнительная плата за песню по дороге.</p>
+                </article>
+            </div>
+        </section>
+
+        <section id="tv">
+            <h2><span class="icon">📺</span>Телевидение, как в 90-х</h2>
+            <div class="section-content">
+                <p>Пакет «Звук есть — картинка нет». Почувствуйте всю глубину ностальгии, когда ваши любимые шоу превращаются в авангардное радио.</p>
+                <p>100 каналов, но 97 — домашний шопинг. Остальные три — мы ещё ищем.</p>
+                <p>Дополнительная услуга: честный перевод рекламы на ненужные языки. Не благодарите.</p>
+                <img class="section-image" src="https://images.unsplash.com/photo-1519033469985-4d929f04909f?auto=format&fit=crop&w=1200&q=80" alt="Старый ЭЛТ-телевизор с помехами">
+            </div>
+        </section>
+
+        <section id="store">
+            <h2><span class="icon">🛒</span>Интернет-Магазин, где нет доставки</h2>
+            <div class="section-content">
+                <p>Доставки нет, зато есть сомнительный ассортимент, на который вы и так не хотели тратить деньги.</p>
+                <ul class="product-list">
+                    <li>Кабель 0.5 метра — €12.99. Достаточно, чтобы дотянуться до ближайшего разочарования.</li>
+                    <li>Модем, который ещё не разлочен. Мы даже не знаем, кто его залочил.</li>
+                    <li>Супер-антивирус 2013 года. Обладает исторической ценностью.</li>
+                </ul>
+                <div class="gallery">
+                    <img src="https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=600&q=80" alt="Кабель, завязанный в узел">
+                    <img src="https://images.unsplash.com/photo-1580894896569-905c673771fd?auto=format&fit=crop&w=600&q=80" alt="Весёлый менеджер с логотипом Bita и пустой коробкой">
+                    <img src="https://images.unsplash.com/photo-1527443224154-9c3ee59a8092?auto=format&fit=crop&w=600&q=80" alt="Супер-антивирус 2013 года на пыльной полке">
+                </div>
+            </div>
+        </section>
+
+        <section id="extras">
+            <h2><span class="icon">🛠️</span>Доп. услуги</h2>
+            <div class="extra-services">
+                <div class="extra-item">
+                    <img src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=200&q=80" alt="СМС о том, что интернет когда-то был">
+                    <div>
+                        <h3>«СМС о том, что интернет когда-то был»</h3>
+                        <p>Мы пришлём вам сообщение, когда вспомним, что у нас есть клиенты. Возможно, это будет ретроспективный отчёт.</p>
+                    </div>
+                </div>
+                <div class="extra-item">
+                    <img src="https://images.unsplash.com/photo-1531297484001-80022131f5a1?auto=format&fit=crop&w=200&q=80" alt="Вызов мастера, если он не занят">
+                    <div>
+                        <h3>«Вызов мастера (если он не занят)»</h3>
+                        <p>Наш мастер приедет, когда закончит собирать мебель из IKEA. Привезёт с собой ту же отвертку.</p>
+                    </div>
+                </div>
+                <div class="extra-item">
+                    <img src="https://images.unsplash.com/photo-1527689368864-3a821dbccc34?auto=format&fit=crop&w=200&q=80" alt="Наклейка с QR-кодом с ошибкой">
+                    <div>
+                        <h3>«Наклейка с QR-кодом с ошибкой»</h3>
+                        <p>Мы пришлём наклейку, сканирование которой ведёт на ваш собственный календарь. Это будет сюрпризом и для нас.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        Компания Bita не несет ответственности за качество услуг, несвоевременное подключение, частое исчезновение сигнала, разочарование клиентов, повышенный уровень стресса, потерю друзей, упадок веры в технологии и возможную зависимость от голубей-курьеров. Все цены указаны без учета надбавки на воздух.
+    </footer>
+</body>
+</html>
